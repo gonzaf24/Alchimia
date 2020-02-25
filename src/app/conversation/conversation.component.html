@@ -1,0 +1,105 @@
+<div id="conversationContainer" [ngClass]="{'shaker': shake}">
+  <div class="whiteBorderGlassConversationBox pato15">
+    <div class="conversationHeadContainer">
+      <div class="row">
+        <div class="col-md-auto">
+          <div class="avatarFrameonline">
+            <img [src]="amigo.avatar || 'assets/img/generic_avatar.png'" id="homeAvatarPicture">
+          </div>
+        </div>
+        <div class="col">
+            <div>
+              <b class="prueba" >{{amigo.nick}}</b> | 
+              <img src="assets/img/{{amigo.status}}.png" class="iconHalf"> 
+              <span>{{amigo.status}}</span>
+            </div>
+            <div>
+              <br/>
+              <span>{{amigo.subnick}}</span>
+              <hr/>
+            </div>
+          
+            <form>
+              <div class="form-group">
+                <div class="card">
+                  <div class="card-body">
+
+                        <div class="vh55 overscroll pabo10 "id="messageArea">
+                          <div class="messageGroup" *ngFor="let message of conversation">
+                            
+                            <div *ngIf="!message.type || message.type=='text'">
+                              <b>{{getUserNickById(message.sender)}}</b> dice : <br/>
+                              <span>{{message.text}}</span>
+                            </div>
+                  
+                            <div *ngIf="message.type=='zumbido'">
+                              <b>{{getUserNickById(message.sender)}}</b> ha enviado un zumbido<br/>
+                            </div>
+                  
+                            <div *ngIf="message.type=='imagenChat'">
+                              <b>{{getUserNickById(message.sender)}}</b> dice : <br/>
+                              <img [src]="message.url"alt="imagen"class="img-fluid">
+                            </div>
+                  
+                          </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="whiteBorderGlassConversationBox pato15">
+    <div class="conversationHeadContainer">
+      <div class="row">
+        <div class="col-md-auto">
+          <div class="avatarFrameonline">
+            <img [src]="user.avatar || 'assets/img/generic_avatar.png'"  id="homeAvatarPicture">
+          </div>
+        </div>
+        <div class="col">
+            <b class="prueba" >{{user.nick}}</b> 
+          <div>
+            <div class="form-group">
+              <textarea [(ngModel)]="textMessage" (keyup.enter)="enviarMensaje()" class="form-control" id="Area-de-Chat"
+                rows="3" placeholder="Escribe menos de 140 caracteres"></textarea>
+            </div>
+            <form>
+              <div class="row mariz5">
+                <div class="col-md-auto text-left">
+                  <i class="img mr-1">
+                    <img src="assets/img/icons/regular_smile.gif" alt="">
+                  </i>
+                  <i class="img mr-1">
+                    <img src="assets/img/icons/tongue_smile.gif" alt="">
+                  </i>
+                  <i class="img mr-1">
+                    <img src="assets/img/icons/angry_smile.gif" alt="">
+                  </i>
+                </div>
+                <div class="col-md-auto text-right">
+                  <label class="btn btn-primary btn-sm mr-1">
+                    <input type="file" (change)="enviarFotoChat($event)">
+                    <i name="image"></i> enviar imagen
+                  </label>
+                </div>
+                <div class="col-md-auto text-right">
+                    <button (click)="enviarZumbido()" type="button" class="btn btn-primary btn-sm mr-1">
+                      enviar zumbido
+                    </button>
+                </div>
+                <div class="col-md-auto text-right">
+                  <button (click)="enviarMensaje()" accept="image/*" type="button" class="btn btn-primary btn-sm mr-1">
+                    Enviar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

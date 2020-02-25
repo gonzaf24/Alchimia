@@ -1,0 +1,30 @@
+#homeContainer {
+    background-image: url(/assets/img/msnbg.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+#whiteBorderGlassBox {
+  border: 2px solid rgba(255, 255, 255, .75);
+  padding: 8px;
+}
+.homeHeadContainer {
+  background-color: rgba(255, 255, 255, .50);
+}
+.whiteContainerPadded {
+  padding: 15px;
+  background-color: #feffff;
+}
+img.icon {
+  width: 30px;
+}
+img.iconHalf {
+  width: 18px;
+}
+
+a.alineadoDerecha{
+  float: right !important;
+  margin-right: 15px;
+}
+

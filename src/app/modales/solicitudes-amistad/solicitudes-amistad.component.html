@@ -1,0 +1,40 @@
+<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+            Nueva Solicitud Amistad
+          <a class="closeButton" (click)="close()">x</a>
+      </div>
+      <div class="modal-body" style="height: auto">
+          <div class="row">
+             <!--  <div class="col-md-3">
+                <img src="{{scope.userSolicitud.avatar}}"  class="prueba" />
+              </div> sss-->
+              <div class="col-md-12">
+                <b>{{userSolicitud.nick}}</b> | {{userSolicitud.email}}
+                
+              </div>
+              <div class="col-md-12">
+                  <small>Te ha enviado esta solicitud</small>
+              </div>
+              <div class="col-md-12">
+              <hr />
+              <b>Deseas agregar a esta persona?</b>
+              <br />
+              <div class="form-check form-check-inline">  
+                <input class="form-check-input" type="radio" [(ngModel)]="agregarlo" value="si" id="yes"> 
+                <label class="form-check-label" for="yes">Si quiero agregarlo  </label>
+                <input class="form-check-input" type="radio" [(ngModel)]="agregarlo" value="no" id="no"> 
+                <label class="form-check-label" for="no">No quiero agregarlo  </label>
+                <input class="form-check-input" type="radio" [(ngModel)]="agregarlo" value="pendiente" id="later"> 
+                <label class="form-check-label" for="later">Decido despues</label> 
+
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <a class="btn btn-primary" (click)="accept();close()">Ok</a>
+          <a class="btn btn-default" (click)="close()">Cerrar</a>
+      </div>
+    </div>
+</div>

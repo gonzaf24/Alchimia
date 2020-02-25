@@ -1,0 +1,24 @@
+<div class="page-content">
+<!--     <div class="text-center shadow-inner p-5 mb-5 bg-white rounded">
+ -->            <div class="wrapper shadow-inner p-5 mb-5 bg-white">
+          <img class="mb-4" src="../../assets/img/alchimia_logo.png" alt="" width="100" height="100">
+          <h4 *ngIf="operation == 'login'" class="marto5">iniciar sesion</h4>
+          <h4 *ngIf="operation == 'registrarse'" class="marto5">registro</h4>
+          <div class="boreredContainer marto5">
+                <input [(ngModel)]="email" class="form-control marbo15" type="email" placeholder="email" />
+                <input [(ngModel)]="password" class="form-control marbo15" type="password" placeholder="contraseña" />
+                <input [(ngModel)]="nick" *ngIf="operation == 'registrarse'" class="form-control marbo15" type="password" placeholder="repita contraseña" />
+            </div>
+            <div class="center marto5">
+                <a (click)="login()"  *ngIf="operation == 'login'" class="btn btn-primary">Iniciar Sesion</a>
+                <a (click)="registrarse()" *ngIf="operation == 'registrarse'" class="btn btn-primary">Registrarme</a>
+            </div>
+            <div class="center size-08 marto20">
+                <p *ngIf="operation == 'login'">No tienes cuenta? <a class="text-success" (click)="operation = 'registrarse'">Registrarse</a></p>
+                <p *ngIf="operation == 'registrarse'">Ya tienes cuenta? has <a class="text-success" (click)="operation = 'login'">Login</a></p>
+            </div>
+          <div class="font-italic size-05 marto20">
+            Copyright © 2020 gonza
+          </div>
+    </div>
+</div>
