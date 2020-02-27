@@ -1,24 +1,72 @@
 <div class="page-content">
-<!--     <div class="text-center shadow-inner p-5 mb-5 bg-white rounded">
- -->            <div class="wrapper shadow-inner p-5 mb-5 bg-white">
+    <div class="wrapper shadow-inner p-5 mb-5 bg-white">
+    
           <img class="mb-4" src="../../assets/img/alchimia_logo.png" alt="" width="100" height="100">
           <h4 *ngIf="operation == 'login'" class="marto5">iniciar sesion</h4>
           <h4 *ngIf="operation == 'registrarse'" class="marto5">registro</h4>
-          <div class="boreredContainer marto5">
-                <input [(ngModel)]="email" class="form-control marbo15" type="email" placeholder="email" />
-                <input [(ngModel)]="password" class="form-control marbo15" type="password" placeholder="contraseña" />
-                <input [(ngModel)]="nick" *ngIf="operation == 'registrarse'" class="form-control marbo15" type="password" placeholder="repita contraseña" />
-            </div>
-            <div class="center marto5">
-                <a (click)="login()"  *ngIf="operation == 'login'" class="btn btn-primary">Iniciar Sesion</a>
-                <a (click)="registrarse()" *ngIf="operation == 'registrarse'" class="btn btn-primary">Registrarme</a>
-            </div>
-            <div class="center size-08 marto20">
-                <p *ngIf="operation == 'login'">No tienes cuenta? <a class="text-success" (click)="operation = 'registrarse'">Registrarse</a></p>
-                <p *ngIf="operation == 'registrarse'">Ya tienes cuenta? has <a class="text-success" (click)="operation = 'login'">Login</a></p>
-            </div>
+          <div class="text-danger size-08 marto10" *ngIf="error">
+                {{error}}
+          </div>
+          <div class="text-success size-08 marto10" *ngIf="exito">
+                {{exito}}
+          </div>
+                <form [formGroup]="registerForm" *ngIf="operation == 'registrarse'"> 
+                    <div class="form-group marto10">
+                        <label>Email</label>
+                        <input type="text" required formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email es requerido</div>
+                            <div *ngIf="f.email.errors.email">Email debe ser una direccion valida</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" required formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password es requerido</div>
+                            <div *ngIf="f.password.errors.minlength">Password debe tener al menos 6 caracteres</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" required formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords deben coincidir</div>
+                        </div>
+                    </div>
+                </form> 
+
+                <form [formGroup]="loginForm"  *ngIf="operation == 'login'"> 
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" required formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submittedLogin && g.email.errors }" />
+                        <div *ngIf="submittedLogin && g.email.errors" class="invalid-feedback">
+                            <div *ngIf="g.email.errors.required">Email es requerido</div>
+                            <div *ngIf="g.email.errors.email">Email debe ser una direccion valida</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" required formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submittedLogin && g.password.errors }" />
+                        <div *ngIf="submittedLogin && g.password.errors" class="invalid-feedback">
+                            <div *ngIf="g.password.errors.required">Password es requerido</div>
+                            <div *ngIf="g.password.errors.minlength">Password debe tener al menos 6 caracteres</div>
+                        </div>
+                    </div>
+                </form> 
+
+                <div class="center marto5">
+                    <a (click)="login()"  *ngIf="operation == 'login'" class="btn btn-primary">Iniciar Sesion</a>
+                    <a (click)="registrarse()" *ngIf="operation == 'registrarse'" class="btn btn-primary">Registrarme</a>
+                </div>
+                <div class="center size-08 marto20">
+                    <p *ngIf="operation == 'login'">No tienes cuenta? <a class="text-success" (click)="operation = 'registrarse';error='';exito=''">Registrarse</a></p>
+                    <p *ngIf="operation == 'registrarse'">Ya tienes cuenta? has <a class="text-success" (click)="operation='login';error='';exito=''">Login</a></p>
+                </div>
+            
           <div class="font-italic size-05 marto20">
             Copyright © 2020 gonza
           </div>
+          
     </div>
 </div>

@@ -8,7 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import {RouterModule, Routes} from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
 import {SearchPipe} from './pipes/search';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
 import {AngularFireStorageModule} from 'angularfire2/storage';
@@ -26,6 +26,18 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { CountriesService } from './services/countries.service';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent, canActivate: [AuthenticationGuard]},
@@ -61,9 +73,27 @@ const appRoutes: Routes = [
     NgbModule,
     BootstrapModalModule.forRoot({container:document.body}),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatInputModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatDatepickerModule, 
+    MatNativeDateModule,
+    MatChipsModule,
+    MatIconModule
   ],
-  providers: [CountriesService],
+
+  providers: [CountriesService,
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ],
+
   bootstrap: [AppComponent],
   entryComponents: [SolicitudesAmistadComponent]
 })

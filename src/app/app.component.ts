@@ -21,10 +21,14 @@ export class AppComponent {
   mailsShown: any[] = [];
 
   constructor(public router: Router, private authenticationService: AuthenticationService, private userService: UsuarioService, private solicitudesAmistadService: SolicitudesAmistadService, private dialogService: DialogService) {
-    /* this.authenticationService.getStatus().subscribe((status) => {
+      this.authenticationService.getStatus().subscribe((status) => {
       this.userService.getUserById(status.uid).valueChanges().subscribe( (data: User) => {
         this.userLogged = data;
-        this.solicitudesAmistadService.getSolicitudesPorEmail(this.userLogged.email).valueChanges().subscribe((requests: any) => {
+         
+/*         this.mailsShown.push((solicitud.sender));
+ */        this.dialogService.addDialog(SolicitudesAmistadComponent, { scope: this, currentRequest: '' });
+
+        /* this.solicitudesAmistadService.getSolicitudesPorEmail(this.userLogged.email).valueChanges().subscribe((requests: any) => {
           this.solicitudes = requests;
           this.solicitudes = this.solicitudes.filter( (solicitud) => {
             return solicitud.status == 'pendiente' ;
@@ -37,8 +41,10 @@ export class AppComponent {
           });
         }, (error) => {
           console.log(error);
-        });
+        }); */
+
+
       });
-    }); */
+    });  
   }
 }

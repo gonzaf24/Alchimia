@@ -1,40 +1,229 @@
-<div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-            Nueva Solicitud Amistad
-          <a class="closeButton" (click)="close()">x</a>
-      </div>
-      <div class="modal-body" style="height: auto">
-          <div class="row">
-             <!--  <div class="col-md-3">
-                <img src="{{scope.userSolicitud.avatar}}"  class="prueba" />
-              </div> sss-->
-              <div class="col-md-12">
-                <b>{{userSolicitud.nick}}</b> | {{userSolicitud.email}}
-                
-              </div>
-              <div class="col-md-12">
-                  <small>Te ha enviado esta solicitud</small>
-              </div>
-              <div class="col-md-12">
-              <hr />
-              <b>Deseas agregar a esta persona?</b>
-              <br />
-              <div class="form-check form-check-inline">  
-                <input class="form-check-input" type="radio" [(ngModel)]="agregarlo" value="si" id="yes"> 
-                <label class="form-check-label" for="yes">Si quiero agregarlo  </label>
-                <input class="form-check-input" type="radio" [(ngModel)]="agregarlo" value="no" id="no"> 
-                <label class="form-check-label" for="no">No quiero agregarlo  </label>
-                <input class="form-check-input" type="radio" [(ngModel)]="agregarlo" value="pendiente" id="later"> 
-                <label class="form-check-label" for="later">Decido despues</label> 
+<div class="modal-dialog modal-dialog-scrollable modal-lg bordeado">
+    <div class="modal-content bordeado">
+         
+      <div class="modal-body bordeado" >
+         
+              <mat-horizontal-stepper [linear]="true" #stepper class="bordeado"  labelPosition="bottom" >
+                     
+                <mat-step [stepControl]="firstFormGroup" errorMessage="!" >
+                        <form class="example-form" [formGroup]="firstFormGroup">
+                          <ng-template matStepLabel>Bienvenido!</ng-template>
+                          <div class="colorTextoBlanco">
+                              <p> Bienvenido</p>
+                              <hr>
+                              <i class="material-icons">
+                                  accessibility_new
+                                  </i>
+                              <p> ¡ Primera vez !</p>
+                              <p> Hagamos unas breves configuraciones para "alquimiarte" y de esta manera encontraras alquimistas de tu interés !.</p>
+                              <p>vamos<i class="material-icons">
+                                  emoji_people
+                                  </i></p>
+                          </div>      
+                          <div class="colorTextoBlanco marto20">
+                            <button mat-raised-button class="pink" matStepperNext>Siguiente</button>
+                          </div>
+                        </form>
+                      </mat-step>
+                      
+                      <mat-step [stepControl]="secondFormGroup" errorMessage="!">
+                        <form class="example-form" [formGroup]="secondFormGroup">
+                            <ng-template matStepLabel>datos personales</ng-template>
+                            <hr>
+                             <mat-form-field>
+                                <mat-label>Sr/Sra/T@des</mat-label>
+                                <mat-select name="sex" formControlName="sexo">
+                                  <mat-option *ngFor="let sex of sexs" [value]="sex.value">
+                                    {{sex.viewValue}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+              
+                              <mat-form-field class="example-full-width"> 
+                                <mat-label>Nombre</mat-label>
+                                <input matInput placeholder="su nombre" formControlName="nombre" required>
+                              </mat-form-field>
+              
+                              <mat-form-field class="example-full-width">
+                                <mat-label>Apellido</mat-label>
+                                  <input matInput placeholder="su apellido" formControlName="apellido" required>
+                              </mat-form-field>
+              
+                              <mat-form-field>
+                                  <mat-label>Fecha nacimiento</mat-label>
+                                  <input matInput [matDatepicker]="dp3" formControlName="fechaNacimiento" required>
+                                  <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                  <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                                </mat-form-field>
+                            
+                            
+                            <div class="colorTextoBlanco marto20">
+                                <button mat-raised-button class="pink" matStepperNext>Siguiente</button>
+                              </div>
+              
+                        </form>
+                      </mat-step>
+              
+                      <mat-step [stepControl]="thirdFormGroup" errorMessage="!">
+                        <form class="example-form" [formGroup]="thirdFormGroup">
+                          <ng-template matStepLabel>datos personales</ng-template>
+                          <hr>
+                          <mat-form-field class="example-full-width"> 
+                              <mat-label>Pais</mat-label>
+                              <mat-select formControlName="pais" (selectionChange)="onChangeCountry($event.value)">
+                                <mat-option *ngFor="let country of countryInfo ; index as i;" [value]="i" >
+                                  {{country.CountryName}}
+                                </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+              
+                          <mat-form-field class="example-full-width">
+                              <mat-label>Estado/Ciudad</mat-label>
+                              <mat-select formControlName="ciudad" (change)="onChangeState($event.value)"  >
+                                <mat-option *ngFor="let state of stateInfo" [value]="state.StateName">
+                                    {{state.StateName}}
+                                </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                          
+                          <mat-form-field class="example-full-width">
+                              <mat-label>Telefono</mat-label>
+                                <input type="number" matInput placeholder="Ej: +34653058319" formControlName="telefono" required>
+                            </mat-form-field>
+              
+                            <div class="row marto20 alineado">
+                                <div>
+                                  <button mat-raised-button class="pink" matStepperPrevious>Atras</button>
+                                </div>
+                                <span class="fx-spacer"></span>
+                                <div>
+                                  <button mat-raised-button class="pink" matStepperNext>Siguiente</button>
+                                </div>
+                            </div>
+                          
+                        </form>
+                      </mat-step>
+              
+                      <mat-step [stepControl]="fourFormGroup" errorMessage="!">
+                          <form class="example-form" [formGroup]="fourFormGroup">
+                            <ng-template matStepLabel>profesion / interes</ng-template>
+                            <hr>
+                            <p class="colorTextoBlanco">En este sitio nos interesa conectar ideas, arte, intereses, actividades, profesiones y pasión, cuantos más sincero seas más adaptadas serán las recomendaciones para ti.</p>
+                            <hr>
+                             <mat-form-field class="example-chip-list example-full-width">
+                                <mat-chip-list #chipListProfesiones formControlName="profesiones">
+                                  <mat-chip
+                                    *ngFor="let prof of profesionesList"
+                                    [selectable]="selectable"
+                                    [removable]="removable"
+                                    (removed)="removeProf(prof)">
+                                    {{prof}}
+                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                  </mat-chip>
+                                  <input
+                                    placeholder="Agregar tu/s profesion/es ..."
+                                    #profesionesInput
+                                    [formControl]="profesionCtrl"
+                                    [matAutocomplete]="auto"
+                                    [matChipInputFor]="chipListProfesiones"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addProfesion($event)">
+                                </mat-chip-list>
+                                <mat-autocomplete #auto (optionSelected)="selectedProf($event)">
+                                  <mat-option *ngFor="let prof of filteredProfesiones | async" [value]="prof">
+                                    {{prof}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field> 
+              
+              
+                              <mat-form-field class="example-chip-list example-full-width">
+                                  <mat-chip-list #chipListProfesionesInteres formControlName="profesionesInteres">
+                                    <mat-chip
+                                      *ngFor="let profInteres of profesionesListInteres"
+                                      [selectable]="selectableInteres"
+                                      [removable]="removableInteres"
+                                      (removed)="removeProfInteres(profInteres)">
+                                      {{profInteres}}
+                                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                    </mat-chip>
+                                    <input
+                                      placeholder="Agregar las profesiones de tu interes ..."
+                                      #profesionesInteresInput
+                                      [formControl]="profesionInteresCtrl"
+                                      [matAutocomplete]="autoInteres"
+                                      [matChipInputFor]="chipListProfesionesInteres"
+                                      [matChipInputSeparatorKeyCodes]="separatorKeysCodesInteres"
+                                      (matChipInputTokenEnd)="addProfesionInteres($event)">
+                                  </mat-chip-list>
+                                  <mat-autocomplete  #autoInteres (optionSelected)="selectedProfInteres($event)">
+                                    <mat-option *ngFor="let profInteres of filteredProfesionesInteres | async" [value]="profInteres">
+                                      {{profInteres}}
+                                    </mat-option>
+                                  </mat-autocomplete>
+                                </mat-form-field>
+                  
+                                <div class="row marto20 alineado">
+                                    <div>
+                                      <button mat-raised-button class="pink" matStepperPrevious>Atras</button>
+                                    </div>
+                                    <span class="fx-spacer"></span>
+                                    <div>
+                                      <button mat-raised-button class="pink" matStepperNext>Siguiente</button>
+                                    </div>
+                                </div> 
+                            
+                          </form>
+                      </mat-step>
+              
+                      <mat-step [stepControl]="fiveFormGroup" errorMessage="!">
+                          <form class="example-form" [formGroup]="fiveFormGroup">
+                            <ng-template matStepLabel>perfil</ng-template>
+                            <hr>  
+                            <p class="colorTextoBlanco">No necesitamos ser anónimos aquí, cuanto más transparente seamos mejor sera nuestra alquimia. Anda! pon una fotografía bonita de ti.</p>
+                            <hr>
+                            <div  class="text-center">
+                                <label class="circle text-center">
+                                    <input formControlName="avatar" type="file" (change)="fileChangeEvent($event)">
+                                    <mat-icon class="camaraAlign">camera_enhance</mat-icon>
+                                </label>
+                            </div>
+              
+                            <div class="text-center bordeado" >
+                                <image-cropper class="bordeado"
+                                    [imageChangedEvent]="imageChangedEvent"
+                                    [maintainAspectRatio]="true"
+                                    [aspectRatio]="1 / 1"
+                                    format="png"
+                                    (imageCropped)="imageCropped($event)"
+                                    (imageLoaded)="imageLoaded()"
+                                    (cropperReady)="cropperReady()"
+                                    (loadImageFailed)="loadImageFailed()"
+                                ></image-cropper>
+                            </div>
 
-              </div>
-            </div>
-          </div>
+                            <div class="center marto20" >
+                                <img  [src]="croppedImage||'assets/img/avatar.png'" class="avatarImage img-fluid">
+                            </div>
+
+                            <div class="row marto20 alineado">
+                                <div>
+                                  <button mat-raised-button class="pink" matStepperPrevious>Atras</button>
+                                </div>
+                                <span class="fx-spacer"></span>
+                                <div>
+                                  <button *ngIf="croppedImage" mat-raised-button class="pink" matStepperNext>Confirmar !</button>
+                                </div>
+                            </div>
+                            
+                          </form>
+                      </mat-step>
+                
+                    </mat-horizontal-stepper>
+                    <div class="modal-footerA">
+                        <button mat-button color="pinkA" (click)="logout();close()">salir</button>
+                    </div> 
       </div>
-      <div class="modal-footer">
-          <a class="btn btn-primary" (click)="accept();close()">Ok</a>
-          <a class="btn btn-default" (click)="close()">Cerrar</a>
-      </div>
+      
     </div>
 </div>

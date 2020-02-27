@@ -1,30 +1,27 @@
-#homeContainer {
-    background-image: url(/assets/img/msnbg.jpg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-#whiteBorderGlassBox {
-  border: 2px solid rgba(255, 255, 255, .75);
-  padding: 8px;
-}
-.homeHeadContainer {
-  background-color: rgba(255, 255, 255, .50);
-}
-.whiteContainerPadded {
-  padding: 15px;
-  background-color: #feffff;
-}
-img.icon {
-  width: 30px;
-}
-img.iconHalf {
-  width: 18px;
+.homeContainer {
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+    margin-left: 25px !important;
+    margin-right: 25px !important;
+    background-color: white !important;
+    padding: 7% !important;
+    -moz-box-shadow:    inset 0 0 10px #000000 !important;
+    -webkit-box-shadow: inset 0 0 10px #000000 !important;
+    box-shadow:         inset 0 0 10px #000000 !important;
+    height: max-content !important;
+    min-height: max-content !important;
 }
 
-a.alineadoDerecha{
-  float: right !important;
-  margin-right: 15px;
+.mat-input-element {
+  color: white;
 }
 
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}

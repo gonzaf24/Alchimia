@@ -31,6 +31,7 @@ export class DropdownComponent implements OnInit {
   }
 
   onChangeCountry(countryValue) {
+    alert(countryValue);
     this.stateInfo=this.countryInfo[countryValue].States;
     this.cityInfo=this.stateInfo[0].Cities;
     console.log(this.cityInfo);
