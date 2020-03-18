@@ -1,0 +1,126 @@
+<div class="modal-dialog modal-dialog-scrollable modal-lg bordeado">
+        <div class="modal-content bordeado">
+          <div class="modal-body bordeado" >
+                    <div class="modal-footerA">
+                        <button mat-button color="pinkA" (click)="close()">cerrar</button>
+                    </div>  
+                    <h3 class="center">EDITAR ALBUM</h3>
+                  <mat-horizontal-stepper  #stepper class="bordeado" labelPosition="bottom" >
+                          
+                          <mat-step [stepControl]="firstFormGroup" state="edit">
+                            
+                            <form class="example-form" [formGroup]="firstFormGroup">
+                                  <ng-template matStepLabel>PORTADA</ng-template>
+                                  <hr>
+                                  <div class="center greenA">{{ mensajeExito }}</div> 
+                                  <mat-form-field class="example-full-width"> 
+                                    <mat-label>Titulo</mat-label>
+                                    <input matInput required placeholder="titulo principal del album" formControlName="titulo" >
+                                  </mat-form-field>
+                                  <hr>
+                                  <div  class="text-center">
+                                      <label class="circle text-center">
+                                          <input formControlName="fotoPortada" type="file" (change)="fileChangeEvent($event)">
+                                          <mat-icon class="camaraAlign">camera_enhance</mat-icon>
+                                      </label>
+                                  </div>
+                                  <div class="text-center bordeado" >
+                                      <image-cropper class="bordeado"
+                                          [imageChangedEvent]="imageChangedEvent"
+                                          [maintainAspectRatio]="true"
+                                          [aspectRatio]="1 / 1"
+                                          format="png"
+                                          (imageCropped)="imageCropped($event)"
+                                          (imageLoaded)="imageLoaded()"
+                                          (cropperReady)="cropperReady()"
+                                          (loadImageFailed)="loadImageFailed()"
+                                      ></image-cropper>
+                                  </div>
+                                  <div class="center marto20" *ngIf="fotoPortada || croppedImage">
+                                      <img  [src]="fotoPortada || croppedImage||'assets/img/avatar.png'" class="img-fluid">
+                                  </div>
+                                  <mat-form-field class="example-full-width marto20">
+                                      <mat-label>Subtitulo</mat-label>
+                                      <textarea maxlength="100" required formControlName="subtitulo" matInput placeholder="breve descripcion portada"></textarea>
+                                  </mat-form-field>
+                                <div class="colorTextoBlanco marto20">
+                                    <button mat-raised-button class="pink" (click)="confirmDatosPortada();" >aplicar</button>
+                                </div>
+                            </form>
+                          </mat-step>
+                  
+                          <mat-step [stepControl]="secondFormGroup" state="edit">
+                            <form class="example-form" [formGroup]="secondFormGroup">
+                              <ng-template matStepLabel>IMAGENES</ng-template>
+                              <hr>
+                              <div  class="text-center">
+                                  <label class="circle text-center">
+                                      <input formControlName="fotosUpload" type="file" #fileInput multiple (change)="cambioArchivo($event)" >
+                                      <mat-icon class="camaraAlign">camera_enhance</mat-icon>
+                                  </label>
+                              </div>
+                                    <div class="center redA">{{ mensajeError }}</div> 
+                              <table class="table size-08">
+                                  <thead>
+                                      <tr>
+                                          <th width="50%">Nombre</th>
+                                          <th></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngFor="let item of fotosUpload">
+                                          <td><strong> {{item.nombreCol}}</strong></td>
+                                          <td nowrap>
+                                              <div class="example-button-row">
+                                                  <button mat-button color="warn" (click)="eliminarFoto(item)">eliminar</button>
+                                                </div>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                              <hr>
+                              
+                            </form>
+                          </mat-step>
+                  
+                          <mat-step [stepControl]="thirdFormGroup"  label="" state="edit">
+                              <form class="example-form" [formGroup]="thirdFormGroup">
+                                <ng-template matStepLabel>CONTENIDO</ng-template>
+                                <hr>
+                                <div class="center greenA">{{ mensajeExito }}</div> 
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Contenido/Descripcion Album</mat-label>
+                                    <textarea   matInput 
+                                                cdkTextareaAutosize
+                                                cdkAutosizeMinRows="8"
+                                                cdkAutosizeMaxRows="12" 
+                                                class="formatoConSaltoLineas"
+                                                required maxlength="600" 
+                                                formControlName="contenido" 
+                                                required 
+                                                matInput 
+                                                placeholder="descripcion del contenido del album">
+                                    </textarea>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width"> 
+                                    <mat-label>Autor</mat-label>
+                                    <input matInput placeholder="autor (opcional) nombre personalizado " formControlName="autor">
+                                </mat-form-field>
+                                <div class="row marto20 alineado">
+                                    <div class="colorTextoBlanco marto20">
+                                        <button mat-raised-button class="pink" (click)="confirmDatosContenido();" >aplicar</button>
+                                    </div>
+                                </div>
+                              </form>
+                          </mat-step>
+
+                          <ng-template matStepperIcon="edit">
+                              <mat-icon>edit</mat-icon>
+                          </ng-template>
+                          
+                    </mat-horizontal-stepper>
+                   
+             </div>
+        </div>
+    </div>
+    

@@ -1,0 +1,15 @@
+.margins {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.marginsPublic {
+  padding-top: 1%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+

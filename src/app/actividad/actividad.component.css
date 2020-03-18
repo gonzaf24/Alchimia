@@ -1,0 +1,29 @@
+.homeContainer {
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;  
+    background-color: white !important;
+    height: max-content !important;
+    min-height: max-content !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+.autor{
+    text-align: right !important;
+}
+
+.margenImagen{
+    padding: 15px !important;
+}
+
+.dimensionesImagen{
+    max-width: 300px !important;
+    max-height: 500px !important;
+    border-radius: 4px;
+}
+
+.icon-display {
+    transform: scale(0.6);
+  }
+

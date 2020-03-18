@@ -1,4 +1,6 @@
-<app-menu *ngIf="router.url != '/login'"></app-menu>
-<div [ngClass]="{'generalContent': router.url != '/login'}">
-  <router-outlet></router-outlet>
+ <div>
+  <app-menu *ngIf="(router.url != '/login') && (router.url != '/public')"></app-menu>
+  <div [ngClass]="{'generalContent': (router.url != '/login' ) && (router.url != '/public')}">
+    <router-outlet></router-outlet>
+  </div>
 </div>

@@ -1,0 +1,19 @@
+.homeContainer {
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;  
+    background-color: white !important;
+    height: max-content !important;
+    min-height: max-content !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}
+.autor{
+    text-align: right !important;
+}
+
+.cc{
+    z-index: 3;
+}
+

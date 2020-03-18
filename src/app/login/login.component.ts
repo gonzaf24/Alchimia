@@ -12,7 +12,9 @@ import { MustMatch } from '../validators/must-match.validator';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
+  
   registerForm: FormGroup;
   loginForm: FormGroup;
   submitted = false;
@@ -42,6 +44,23 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  pressRegister(){
+    this.registerForm.get('email').setValue(this.loginForm.get('email').value);
+    this.registerForm.get('password').setValue("");
+    this.registerForm.get('confirmPassword').setValue("");
+    this.operation = 'registrarse';
+    this.error='';
+    this.exito=''
+  }
+
+  pressLogin(){
+    this.loginForm.get('email').setValue(this.registerForm.get('email').value);
+    this.loginForm.get('password').setValue(this.registerForm.get('password').value);
+    this.operation='login';
+    this.error='';
+    this.exito=''
+  }
+
   get f() { return this.registerForm.controls; }
   get g() { return this.loginForm.controls; }
 
@@ -55,6 +74,7 @@ export class LoginComponent implements OnInit {
       this.usuarioService.getUserById(this.userUID).valueChanges().subscribe((user: User) => {
         this.userLoged = user;
         this.userLoged.status = "online";
+        localStorage.setItem('currentUser', JSON.stringify(this.userLoged));
         this.usuarioService.editarUsuario(this.userLoged);   
       }, (error) => {
         this.error=error;
@@ -68,19 +88,21 @@ export class LoginComponent implements OnInit {
   }
 
   registrarse(){
+
     this.submitted = true;
     if (this.registerForm.invalid) {
         return;
     }
     this.authenticationService.registerWithEmail( this.registerForm.get('email').value, this.registerForm.get('password').value).then( (data)=>{
-     
       const usuario = {
         uid: data.user.uid,
-        email: this.registerForm.get('email').value
+        email: this.registerForm.get('email').value,
+        notificar: true
       };
       this.usuarioService.crearUsuario(usuario).then((data2) => {
           this.exito = "se ha registrado correctamente";
           this.error = null;
+          this.registerForm.get('confirmPassword').setValue("");
           console.log(data2);
       }).catch( (error) =>{
           this.error=error;
@@ -90,6 +112,7 @@ export class LoginComponent implements OnInit {
       this.error=error;
       console.log(error);
     })
+    
   }
 
 }

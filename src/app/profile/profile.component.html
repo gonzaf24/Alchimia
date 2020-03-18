@@ -1,57 +1,125 @@
-<div id="profileContainer">
-    <div class="container pato45">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="avatarFrameonline" *ngIf="user">
-                    <img [src]="croppedImage || user.avatar || 'assets/img/generic_avatar.png'"
-                        class="avatarImage img-fluid">
-                </div>
-                <hr />
-                <div>
-                    <span>Cambiar Foto</span><br />
-                    <label class="custom-file-upload">
-                        <input type="file" (change)="fileChangeEvent($event)">
-                        Subir Avatar
-                    </label>
-                </div>
-            </div>
-            <div class="col-md-9" *ngIf="user">
-            
-            <image-cropper
-                [imageChangedEvent]="imageChangedEvent"
-                [maintainAspectRatio]="true"
-                [aspectRatio]="1 / 1"
-                format="png"
-                (imageCropped)="imageCropped($event)"
-                (imageLoaded)="imageLoaded()"
-                (cropperReady)="cropperReady()"
-                (loadImageFailed)="loadImageFailed()"
-            ></image-cropper>
+<div  class="h-100 homeContainer" *ngIf="userLogged">
+        <div class="container">
+                <div class="row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                                <div class="center pato150" >
+                                        <h1> USUARIO </h1>
+                                    </div>
+                                    
+                                    <div class="row justify-content-center">
+                                        
+                                        <div class="container justify-content-center">
+                                                
+                                                <div class="row derecha-align">
+                                                    <div class="col-12" >
+                                                        <button (click)="editar();" mat-button color="warn">editar</button>
+                                                    </div>
+                                                </div>
+                                
+                                                <hr>
+                                                <div class="row justify-content-center marto20">
+                                                   
+                                                    <div class="col-xs-12 col-md-6 center ">
+                                
+                                                            <div class="row justify-content-center">
+                                                                    <div class="col-xs-4">
+                                                                    </div>
+                                                                    <div class="col-xs-4">
+                                                                        <div class="media">
+                                                                            <img class="align-self-start mr-1 ml-1 avatarImage" [src]="userLogged.avatar||'assets/img/avatar.png'">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-4">
+                                                                    </div>
+                                                                </div>
+                                
+                                                            <div class="row justify-content-center marto20">
+                                                                <div class="col-xs-12">
+                                                                    <h4>{{userLogged.nombre}} {{userLogged.apellido}}</h4>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row size-08">
+                                                                <div class="col-xs-1 col-md-1">
+                                                                        <mat-icon class="icon-display">location_on</mat-icon>
+                                                                </div>
+                                                                <div class="col-xs-3 col-md-3">
+                                                                     <strong>Ubicacion</strong>
+                                                                </div>
+                                                                <div class="col-xs-8 col-md-8">
+                                                                        {{userLogged.estadoCiudad}} - {{userLogged.pais}}
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row size-08">
+                                                                <div class="col-xs-2 col-md-1">
+                                                                    <mat-icon class="icon-display">alternate_email</mat-icon>
+                                                                </div>
+                                                                <div class="col-xs-4 col-md-3">
+                                                                        <strong>Email</strong>
+                                                                </div>
+                                                                <div class="col-xs-6 col-md-8">
+                                                                    {{userLogged.email}}
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row size-08">
+                                                                <div class="col-xs-2 col-md-1">
+                                                                    <mat-icon class="icon-display">stay_current_portrait</mat-icon>
+                                                                </div>
+                                                                <div class="col-xs-4 col-md-3">
+                                                                        <strong>Telefono</strong>
+                                                                </div>
+                                                                <div class="col-xs-6 col-md-8">
+                                                                    {{userLogged.telefono}}
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row size-08">
+                                                                <div class="col-xs-2 col-md-1">
+                                                                    <mat-icon class="icon-display">calendar_today</mat-icon>
+                                                                </div>
+                                                                <div class="col-xs-4 col-md-3">
+                                                                        <strong>Fecha Nacimiento</strong>
+                                                                </div>
+                                                                <div class="col-xs-6 col-md-8">
+                                                                    {{userLogged.fechaNacimiento | date:'d/M/yyyy'}}
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row size-08">
+                                                                <div class="col-xs-2 col-md-1">
+                                                                    <mat-icon class="icon-display">work</mat-icon>
+                                                                </div>
+                                                                <div class="col-xs-4 col-md-3">
+                                                                        <strong>Profesiones</strong>
+                                                                </div>
+                                                                <div class="col-xs-6 col-md-8" *ngIf="userLogged.profesiones">
+                                                                    {{userLogged.profesiones.toString().split(',').join('\n'+'-'+'\n')}}
 
-                <div>
-                    <label fixed>Nick</label>
-                    <input [(ngModel)]="user.nick" type="text" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row marbo20 size-08">
+                                                                <div class="col-xs-2 col-md-1">
+                                                                    <mat-icon class="icon-display">rowing</mat-icon>
+                                                                </div>
+                                                                <div class="col-xs-4 col-md-3">
+                                                                        <strong>Intereses</strong>
+                                                                </div>
+                                                                <div class="col-xs-6 col-md-8">
+                                                                    {{userLogged.intereses}}
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+
+                        </div>
+                        <div class="col-md-2">
                 </div>
-                <div>
-                    <label fixed>Subnick</label>
-                    <input [(ngModel)]="user.subnick" type="text" class="form-control" />
-                </div>
-                <div>
-                    <label fixed>Email</label>
-                    <input [(ngModel)]="user.email" type="email" disabled class="form-control" />
-                </div>
-                <div>
-                    <label fixed>Status</label>
-                    <select [(ngModel)]="user.status" class="form-control">
-                        <option value="online">Conectado</option>
-                        <option value="away">Ausente</option>
-                        <option value="busy">Ocupado</option>
-                        <option value="offline">Desconectado</option>
-                    </select>
-                </div>
-                <hr />
-                <a (click)="guardarCambios()" class="btn btn-primary btn-block">Guardar</a>
-            </div>
         </div>
-    </div>
 </div>

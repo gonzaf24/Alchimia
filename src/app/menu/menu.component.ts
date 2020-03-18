@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from '../interfaces/user';
+import { UsuarioService } from '../services/usuario.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +11,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  userLogged: User;
+  unaSolaVez: boolean;
+  public fixed: boolean = false;
+  routero:Router;
+
+  constructor( 
+    private router: Router, 
+    private usuarioService: UsuarioService , 
+    private authenticationService: AuthenticationService) { 
+      this.routero = router;
+    }
 
   ngOnInit() {
+    this.authenticationService.getStatus().subscribe((status) => {
+      if(status){
+        this.usuarioService.getUserById(status.uid).valueChanges().subscribe( (data: User) => {
+          this.userLogged = data;
+        });
+      }
+    });  
   }
+
+  irAtras(){
+    window.history.back();
+  }
+
+  logout() {
+    this.userLogged.status = "offline";
+    this.usuarioService.editarUsuario(this.userLogged);
+    this.authenticationService.logOut().then( ()=>{
+      this.router.navigate(['public']);
+    }).catch( (error) =>{
+      console.log(error);
+    });
+  }
+
 
 }

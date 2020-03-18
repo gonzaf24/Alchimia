@@ -1,0 +1,113 @@
+<div class="h-100 homeContainer">
+
+    <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+               
+                </div>
+                <div class="col-md-8">
+                
+            <div class="center pato150" >
+                    <h1> ACTIVIDADES </h1>
+                </div>
+            
+    
+            <div class="row marbo20">
+                <div class="col"></div>
+                <div class="col-md-auto autor">
+                    <button (click)="crearActividad();" mat-fab color="warn">+activ.</button>
+                </div>
+                <div class="col col-lg-1"></div>
+            </div>
+    
+            <div class="row justify-content-center ">
+                <div class="col-md-12 padbo150">
+                    <div class="row">
+                        <a class="col-sm-4 margenImagen" *ngFor="let activ of actividades">
+    
+                            <mat-card class="example-card">
+    
+                                <img mat-card-image class="opaca" src="{{ activ.fotoPortada || 'assets/img/template-portada.jpg' }}">
+        
+                                <div matTooltip="ver" class="bottomrightA" routerLink="/actividad/{{activ.uid}}">
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </div>
+    
+                                <div class="toprightA">
+                                    <div class="grid-container" routerLink="/actividad/{{activ.uid}}">
+                                        <div class="diaNombre">{{activ.fechaInicio | date:'EEEE'}}</div>
+                                        <div class="diaNumero"><strong><b>{{activ.fechaInicio | date:'dd'}}</b></strong></div>
+                                        <div class="mesNombre">{{activ.fechaInicio | date:'MMM'}}</div>
+                                        <div class="vacio"></div>
+                                        <div class="hora">{{activ.horaInicio.substr(0,2)}}:{{activ.horaInicio.substr(2,5)}}.hrs</div>
+                                    </div>
+                                </div>
+    
+                                <button matTooltip="administrar" matTooltipPosition="above" class="topleftA" mat-icon-button [matMenuTriggerFor]="menu" aria-label="">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+    
+                                <mat-menu #menu="matMenu">
+                                    <button  mat-menu-item routerLink="/actividad/{{activ.uid}}">
+                                        <mat-icon>remove_red_eye</mat-icon>
+                                        <span>ver</span>
+                                    </button>
+                                    <button mat-menu-item (click)="editarActividad(activ);">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>editar</span>
+                                    </button>
+                                    <button mat-menu-item (click)="eliminarActividad(activ);">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>eliminar</span>
+                                    </button>
+                                </mat-menu>
+    
+                                
+                               
+                                <div routerLink="/actividad/{{activ.uid}}" class="centerActividad"><a class="size-08">{{activ.titulo}}</a></div>
+
+
+                                <div class="bottomCardInfo white noMargin pabo5">
+                        
+                                        <mat-grid-list cols="1" rowHeight="25px">
+                                            <mat-grid-tile>
+                                                    <div class="text-inside-grid">
+                                                        <mat-icon class="icon-display align-middle">location_on</mat-icon>
+                                                        {{activ.estadoCiudad}} - {{activ.pais}}
+                                                    </div>
+                                            </mat-grid-tile>
+                                            
+                                            <mat-grid-tile >
+                                                    <div class="text-inside-grid" *ngIf="activ.profesionesRelacionadas">
+                                                            <mat-icon class="icon-display align-middle">label</mat-icon>
+                                                            {{activ.profesionesRelacionadas.toString().split(',').join('\n'+'-'+'\n')}}
+                                                    </div>
+                                            </mat-grid-tile>
+                                            
+                                            <mat-grid-tile>
+                                                   
+                                                    <div class="text-inside-grid ">
+                                                            
+                                                            <mat-icon matTooltip="me gusta" class="icon-displayMeGusta align-middle pointer"> favorite</mat-icon>
+                                                            <mat-icon matTooltip="compartir" class="icon-displayCompartir align-middle pointer"> share</mat-icon>
+                                                            
+                                                    </div>
+                                            </mat-grid-tile>
+                                        </mat-grid-list>
+                                   
+                                    </div>
+
+    
+                            </mat-card>
+                        </a>
+    
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="col-md-2">
+                
+                </div>
+            </div>
+    </div>
+</div>

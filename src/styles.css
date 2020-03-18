@@ -1,3 +1,16 @@
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css"; 
+
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+    transform: none !important;
+}
+
+strong{
+  font-weight: bold;
+}
+
+.formatoConSaltoLineas{
+  white-space: pre-wrap !important;
+}
 .center {
   text-align: center !important;
 }
@@ -16,11 +29,46 @@
 .marto25 {
   margin-top: 25px !important;
 }
+.marto35 {
+  margin-top: 35px !important;
+}
+.marto50 {
+  margin-top: 50px !important;
+}
 .marbo15 {
   margin-bottom: 15px !important;
 }
+.marbo5 {
+  margin-bottom: 5px !important;
+}
+.marbo20 {
+  margin-bottom: 20px !important;
+}
+.marbo25 {
+  margin-bottom: 25px !important;
+}
+.marbo30 {
+  margin-bottom: 30px !important;
+}
+.marbo35 {
+  margin-bottom: 35px !important;
+}
+.pabo50 {
+  padding-bottom: 50px !important;
+}
+.padbo150 {
+  padding-bottom: 150px !important;
+}
+
+.padbo180 {
+  padding-bottom: 180px !important;
+}
+.padbo350 {
+  padding-bottom: 350px !important;
+}
+
 .generalContent {
-  margin-top: 56px;
+  margin-top: 5px;
 }
 #homeAvatarPicture {
   max-width: 100px;
@@ -28,14 +76,52 @@
 .disblo {
   display: block !important;
 }
+.pato150 {
+  padding-top: 150px !important;
+}
+
+.pato180 {
+  padding-top: 180px !important;
+}
+.pato5 {
+  padding-top: 5px !important;
+}
+.pato20 {
+  padding-top: 20px !important;
+}
+.pato25 {
+  padding-top: 25px !important;
+}
+.pato35 {
+  padding-top: 35px !important;
+}
+.pato50 {
+  padding-top: 50px !important;
+}
+
 .marbo5 {
   margin-bottom: 5px;
+}
+.marbo100 {
+  margin-bottom: 100px;
 }
 .pato45 {
   padding-top: 45px;
 }
+.pabo45 {
+  padding-bottom: 45px;
+}
+.pabo5 {
+  padding-bottom: 5px;
+}
 input[type="file"] {
   display: none;
+}
+.size-01{
+  font-size: 0.1em;
+}
+.size-02{
+  font-size: 0.2em;
 }
 .size-05{
   font-size: 0.5em;
@@ -46,9 +132,15 @@ input[type="file"] {
 .size-10{
   font-size: 1.0em;
 }
+.size-12{
+  font-size: 1.2em;
+}
 .size-15{
   font-size: 1.5em;
 }
+
+
+
 .cdk-global-overlay-wrapper, 
 .cdk-overlay-container { 
   z-index: 9999!important; 
@@ -67,3 +159,8 @@ body{
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ngx-gallery-preview-img-wrapper{
+  top: 90px !important;
+  max-height: 90% !important;
+}

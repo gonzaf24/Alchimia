@@ -1,0 +1,76 @@
+<div class="h-100 homeContainer">
+
+        <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+            
+            </div>
+            <div class="col-md-8">
+            
+                
+
+                    <div class="center pato150" >
+                            <h1>MI ARTE</h1>
+                    </div>
+                    
+                    <div class="row marbo20">
+                        <div class="col"></div>
+                        <div class="col-md-auto autor">
+                            <button (click)="crearAlbum()" mat-fab color="warn">+album</button>
+                        </div>
+                        <div class="col col-lg-1"></div>
+                    </div>
+            
+                    <div class="row justify-content-center ">
+                        <div class="col-md-12 padbo150">
+                            <div class="row">
+                                <a class="col-sm-4 margenImagen" *ngFor="let alb of albums">
+            
+                                    <mat-card class="example-card">
+                                        <img mat-card-image class="opaca" src="{{alb.fotoPortada||'assets/img/template-portada.jpg'}}">
+                                        <div routerLink="/album/{{alb.uid}}" class="centerA">{{alb.titulo}}</div>
+                                        
+            
+                                        <button class="toprightA" mat-icon-button [matMenuTriggerFor]="menu" aria-label="">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+
+                                        <mat-menu #menu="matMenu">
+                                            <button  mat-menu-item routerLink="/album/{{alb.uid}}">
+                                                <mat-icon>remove_red_eye</mat-icon>
+                                                <span>ver</span>
+                                            </button>
+                                            <button mat-menu-item (click)="editarAlbum(alb);">
+                                                <mat-icon>edit</mat-icon>
+                                                <span>editar</span>
+                                            </button>
+                                            <button mat-menu-item (click)="eliminarAlbum(alb);">
+                                                <mat-icon>delete</mat-icon>
+                                                <span>eliminar</span>
+                                            </button>
+                                        </mat-menu>
+            
+            
+                                        <div class="bottomleftA">{{alb.fechaCreacion | date:'d/M/yyyy'}}</div>
+                                        <mat-card-content routerLink="/album/{{alb.uid}}" class="subtitulo">
+                                            <p>
+                                                {{alb.subtitulo}}
+                                            </p>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </a>
+            
+                            </div>
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="col-md-2">
+            
+            </div>
+        </div>
+        </div>
+
+</div>

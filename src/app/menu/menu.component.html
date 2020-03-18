@@ -1,8 +1,69 @@
-<!-- <div id="menuContainer">
-    <div class="item" routerLink="/home">
-        <i class="fas fa-home"></i> Chat-Example Angular
-    </div>
-    <div class="item-right" routerLink="/profile">
-        <i class="fas fa-cogs"></i> 
-    </div>
-</div> -->
+
+<div class="fixedUP"> 
+        <div class="center">
+                <div class="col-xs-12 center alchimiaLogo">
+                        <img class="iia" routerLink='/home' src="../../assets/img/alchimia_logo-blanco.png" >
+                </div>
+            <div class="row center colorWhite pato20 "> 
+                   
+                <span class="example-spacer"> </span>   
+                
+                <div class="col-xs-2 center">
+                    <div class="col-xl-12 center pointer" matTooltip="ATRAS"><mat-icon (click)="irAtras();"  *ngIf="(routero.url != '/home')" >undo</mat-icon></div>
+                </div>
+                <div class="col-xs-2 center">
+                    <div class="col-xl-12 center pointer" matTooltip="MURO"><mat-icon routerLink="/home">home</mat-icon></div>
+                </div>
+                <div class="col-xs-3 center">
+                    <div class="col-xl-12 center pointer" matTooltip="MI ARTE"><mat-icon routerLink="/galeria">add_photo_alternate</mat-icon></div>
+                </div>
+                <div class="col-xs-3 center">
+                    <div class="col-xl-12 center pointer" matTooltip="ACTIVIDADES"><mat-icon routerLink="/actividades">calendar_today</mat-icon></div>
+                </div>
+                <div class="col-xs-1 center">
+                    <div href="javascript:history.back()" class="col-xl-12 center pointer" matTooltip="MENSAJES"><mat-icon>message</mat-icon></div>
+                </div>
+                <div class="col-xs-3 center">
+                    <div class="col-xl-12 center pointer" matTooltip="PERFIL"><mat-icon routerLink="/profile">account_circle</mat-icon></div>
+                </div>
+
+                <div class="col-xs-3 center" *ngIf="userLogged">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon class="ii">more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item routerLink="/home">
+                            <mat-icon>home</mat-icon>
+                            <span>Home</span>
+                        </button>
+                        <button mat-menu-item routerLink="/profile">
+                            <mat-icon>edit</mat-icon>
+                            <span>Perfil</span>
+                        </button>
+                        <button mat-menu-item routerLink="/galeria">
+                            <mat-icon>add_photo_alternate</mat-icon>
+                            <span>Mi Arte</span>
+                        </button>
+                        <button mat-menu-item routerLink="/actividades">
+                          <mat-icon>assignment_ind</mat-icon>
+                          <span>Actividades</span>
+                        </button>
+                        <button mat-menu-item >
+                          <mat-icon>message</mat-icon>
+                          <span>Mensajes</span>
+                        </button>
+                        <button mat-menu-item  routerLink="/public/public-perfil/{{userLogged.email}}">
+                            <mat-icon>accessibility_new</mat-icon>
+                            <span>Perfil publico</span>
+                        </button>
+                        <button mat-menu-item (click)="logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>cerrar sesion</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+
+                <span class="example-spacer"> </span> 
+            </div>
+        </div>
+        </div>

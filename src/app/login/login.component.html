@@ -1,7 +1,6 @@
 <div class="page-content">
     <div class="wrapper shadow-inner p-5 mb-5 bg-white">
-    
-          <img class="mb-4" src="../../assets/img/alchimia_logo.png" alt="" width="100" height="100">
+          <img routerLink='/public' class="mb-4" src="../../assets/img/alchimia_logo.png" alt="" width="100" height="100">
           <h4 *ngIf="operation == 'login'" class="marto5">iniciar sesion</h4>
           <h4 *ngIf="operation == 'registrarse'" class="marto5">registro</h4>
           <div class="text-danger size-08 marto10" *ngIf="error">
@@ -29,12 +28,14 @@
                     </div>
                     <div class="form-group">
                         <label>Confirm Password</label>
-                        <input type="password" required formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                        <input (keydown.enter)="registrarse()" type="password" required formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
                         <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
                             <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords deben coincidir</div>
                         </div>
                     </div>
+                  
                 </form> 
+                  
 
                 <form [formGroup]="loginForm"  *ngIf="operation == 'login'"> 
                     <div class="form-group">
@@ -47,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" required formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submittedLogin && g.password.errors }" />
+                        <input (keydown.enter)="login()" type="password" required formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submittedLogin && g.password.errors }" />
                         <div *ngIf="submittedLogin && g.password.errors" class="invalid-feedback">
                             <div *ngIf="g.password.errors.required">Password es requerido</div>
                             <div *ngIf="g.password.errors.minlength">Password debe tener al menos 6 caracteres</div>
@@ -55,18 +56,21 @@
                     </div>
                 </form> 
 
+                <div class="center size-08 marto5" *ngIf="operation == 'registrarse'">
+                        <p >Al registrarte, confirmas tu mayoría de <br>edad y aceptas las <a class="text-warning" (click)="pressLogin();"> condiciones de uso </a> <br>y la <a class="text-warning" (click)="pressLogin();">política de privacidad </a>.</p>
+                </div>
+
                 <div class="center marto5">
                     <a (click)="login()"  *ngIf="operation == 'login'" class="btn btn-primary">Iniciar Sesion</a>
                     <a (click)="registrarse()" *ngIf="operation == 'registrarse'" class="btn btn-primary">Registrarme</a>
                 </div>
                 <div class="center size-08 marto20">
-                    <p *ngIf="operation == 'login'">No tienes cuenta? <a class="text-success" (click)="operation = 'registrarse';error='';exito=''">Registrarse</a></p>
-                    <p *ngIf="operation == 'registrarse'">Ya tienes cuenta? has <a class="text-success" (click)="operation='login';error='';exito=''">Login</a></p>
+                    <p *ngIf="operation == 'login'">No tienes cuenta? <a class="text-success" (click)="pressRegister();">Registrarse</a></p>
+                    <p *ngIf="operation == 'registrarse'">Ya tienes cuenta? has <a class="text-success" (click)="pressLogin();">Login</a></p>
                 </div>
             
           <div class="font-italic size-05 marto20">
             Copyright © 2020 gonza
           </div>
-          
     </div>
 </div>
