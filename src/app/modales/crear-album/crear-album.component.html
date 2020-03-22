@@ -1,11 +1,12 @@
 <div class="modal-dialog modal-dialog-scrollable modal-lg bordeado">
+
     <div class="modal-content bordeado">
       <div class="modal-body bordeado" >
                 <div class="modal-footerA">
                     <button mat-button color="pinkA" (click)="cerrar();close()">cerrar</button>
                 </div>  
               <mat-horizontal-stepper (selectionChange)="selectionChange($event)" [linear]="true" #stepper class="bordeado"  labelPosition="bottom" >
-                
+                 
                       <mat-step [stepControl]="firstFormGroup" errorMessage="!">
                         <form class="example-form" [formGroup]="firstFormGroup">
                             <ng-template matStepLabel>portada</ng-template>
@@ -63,8 +64,8 @@
                                   <mat-icon class="camaraAlign">camera_enhance</mat-icon>
                               </label>
                           </div>
-                                <div class="center redA">{{ mensajeError }}</div> 
-                          <table class="table size-08">
+                          <div class="center redA">{{ mensajeError }}</div> 
+                          <table class="table size-08 white" *ngIf="!loading">
                               <thead>
                                   <tr>
                                       <th width="50%">Nombre</th>
@@ -82,6 +83,8 @@
                                   </tr>
                               </tbody>
                           </table>
+                          <div class="row justify-content-center"><mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner></div>
+
                           <hr>
                           <div class="row marto20 alineado">
                               <div>
@@ -99,11 +102,13 @@
                           <form class="example-form" [formGroup]="thirdFormGroup">
                             <ng-template matStepLabel>contenido</ng-template>
                             <hr>
-                            <mat-form-field class="example-full-width">
+                            <div class="row justify-content-center"><mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner></div>
+
+                            <mat-form-field *ngIf="!loading" class="example-full-width">
                                 <mat-label>Contenido/Descripcion Album</mat-label>
                                 <textarea maxlength="600" formControlName="contenido" required matInput placeholder="descripcion del contenido del album"></textarea>
                             </mat-form-field>
-                            <mat-form-field class="example-full-width"> 
+                            <mat-form-field *ngIf="!loading" class="example-full-width"> 
                                 <mat-label>Autor</mat-label>
                                 <input matInput placeholder="autor (opcional) nombre personalizado " formControlName="autor">
                             </mat-form-field>
@@ -113,7 +118,7 @@
                                 </div>
                                 <span class="fx-spacer"></span>
                                 <div>
-                                  <button mat-raised-button class="pink" (click)="guardarCambios();close();" matStepperNext>Confirmar !</button>
+                                  <button mat-raised-button class="pink" (click)="guardarCambios();" matStepperNext>Confirmar !</button>
                                 </div>
                             </div>
                           </form>

@@ -1,16 +1,27 @@
 <div class="h-100 homeContainer" *ngIf="userLogged">
 
-
-    <div class="center pato150" routerLink="/public/public-perfil/{{userLogged.email}}">
-        <h1> HOME </h1>
+    <div class="center pato150" routerLink="/public/public-perfil/{{userLogged.email}}" *ngIf="!userLogged.notificar">
+        <h1> HILO </h1>
         <p>aqui saldran las ultimas actividades creadas, arte y usuarios registrados en el sistema</p>
     </div>
 
-    <div class="marbo20 center" *ngIf="userLogged.notificar">
+    <div class="pabo45 pato150 center" *ngIf="userLogged.notificar">
+        <br>
+        Bienvenido ...
+        <br>
+        por ser la primera vez debes completar datos de tu perfil.
+        <br>
+        <br>
+        <br>
         <button (click)="primeraVez();" mat-fab color="warn">empezar</button>
+        <br>
+        <br>
     </div>
 
-    <div class="row" *ngIf="!userLogged.notificar">
+    <div class="row justify-content-center"><mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner></div>
+
+
+    <div class="row" *ngIf="!userLogged.notificar && !loading">
         <div class="col-xs-12 col-md-4">
         </div>
         <div class="col-xs-12 col-md-4">
@@ -21,58 +32,63 @@
                         <div *ngIf="tile.usuario">
                             <mat-card class="cardUser">
 
-                                <div class="toprightAlbum" >
-                                    <mat-icon matTooltip="seguir" routerLink="/public/public-perfil/{{tile.usuario.email}}">transfer_within_a_station</mat-icon>
+                                <div class="toprightAlbum">
+                                    <mat-icon matTooltip="seguir"
+                                        routerLink="/public/public-perfil/{{tile.usuario.email}}">
+                                        transfer_within_a_station</mat-icon>
                                 </div>
 
-                                <div class="topleftAboutTime border" routerLink="/public/public-perfil/{{tile.usuario.email}}">
+                                <div class="topleftAboutTime border"
+                                    routerLink="/public/public-perfil/{{tile.usuario.email}}">
                                     <div>{{tile.aboutTime}}</div>
                                 </div>
 
-                                <div routerLink="/public/public-perfil/{{tile.usuario.email}}" class="topCenterTypeCard row noMargin blue">
-                                    <div  class="flexAuto marto5">NUEVO USUARIO</div>
+                                <div routerLink="/public/public-perfil/{{tile.usuario.email}}"
+                                    class="topCenterTypeCard row noMargin blue">
+                                    <div class="flexAuto marto5">NUEVO USUARIO</div>
                                 </div>
 
-                                 <div class="bottomCardInfoA noMargin pabo5">
-                                        <div routerLink="/public/public-perfil/{{tile.usuario.email}}" class="bottomCardInfoAA">
-                                                <img class="align-self-start mr-1 ml-1 avatarImage"
-                                                [src]="tile.usuario.avatar||'assets/img/avatar.png'">
-                                        </div>
-                                        <div class="bottomCardInfoAB">
-                                                <mat-grid-list cols="1" rowHeight="20px">
-                                                    <mat-grid-tile>
-                                                            <div routerLink="/public/public-perfil/{{tile.usuario.email}}" fxFlex fxLayoutAlign="center center ">
-                                                                  <a class="size-15">{{tile.autor}}</a>  
-                                                            </div>
-                                                    </mat-grid-tile>
-                                                </mat-grid-list>
-                                        </div>
-                                        <div class="bottomCardInfoAC">
-                                                <mat-grid-list cols="1" rowHeight="20px">
-                                                        <mat-grid-tile>
-                                                                <div class="text-inside-grid">
-                                                                    <mat-icon class="icon-display align-middle">location_on</mat-icon>
-                                                                    {{tile.usuario.estadoCiudad}} - {{tile.usuario.pais}}
-                                                                </div>
-                                                        </mat-grid-tile>
-                                                        <mat-grid-tile>
-                                                                <div class="text-inside-grid">
-                                                                        <mat-icon class="icon-display align-middle" *ngIf="tile.usuario.profesiones">label</mat-icon>
-                                                                        {{tile.usuario.profesiones.toString().split(',').join('\n'+'-'+'\n')}}
-                                                                    </div>
-                                                        </mat-grid-tile>
-                                                        <mat-grid-tile>
-                                                                <div class="text-inside-grid">
-                                                                        <mat-icon class="icon-display align-middle">email</mat-icon>
-                                                                        {{tile.usuario.email}}
-                                                                    </div>
-                                                        </mat-grid-tile>
-                                                </mat-grid-list>
-                                        </div>
-                                        
-                                 </div>
-                                    
-                               
+                                <div class="bottomCardInfoA noMargin pabo5">
+                                    <div routerLink="/public/public-perfil/{{tile.usuario.email}}"
+                                        class="bottomCardInfoAA">
+                                        <img class="align-self-start mr-1 ml-1 avatarImage"
+                                            [src]="tile.usuario.avatar||'assets/img/avatar.png'">
+                                    </div>
+                                    <div class="bottomCardInfoAB">
+                                        <mat-grid-list cols="1" rowHeight="20px">
+                                            <mat-grid-tile>
+                                                <div routerLink="/public/public-perfil/{{tile.usuario.email}}" fxFlex
+                                                    fxLayoutAlign="center center ">
+                                                    <a class="size-15">{{tile.autor}}</a>
+                                                </div>
+                                            </mat-grid-tile>
+                                        </mat-grid-list>
+                                    </div>
+                                    <div class="bottomCardInfoAC">
+                                        <mat-grid-list cols="1" rowHeight="20px">
+                                            <mat-grid-tile>
+                                                <div class="text-inside-grid">
+                                                    <mat-icon class="icon-display align-middle">location_on</mat-icon>
+                                                    {{tile.usuario.estadoCiudad}} - {{tile.usuario.pais}}
+                                                </div>
+                                            </mat-grid-tile>
+                                            <mat-grid-tile>
+                                                <div class="text-inside-grid">
+                                                    <mat-icon class="icon-display align-middle"
+                                                        *ngIf="tile.usuario.profesiones">label</mat-icon>
+                                                    {{tile.usuario.profesiones.toString().split(',').join('\n'+'-'+'\n')}}
+                                                </div>
+                                            </mat-grid-tile>
+                                            <mat-grid-tile>
+                                                <div class="text-inside-grid">
+                                                    <mat-icon class="icon-display align-middle">email</mat-icon>
+                                                    {{tile.usuario.email}}
+                                                </div>
+                                            </mat-grid-tile>
+                                        </mat-grid-list>
+                                    </div>
+
+                                </div>
 
                             </mat-card>
                         </div>
@@ -81,13 +97,16 @@
                             <mat-card>
                                 <img mat-card-image class="opacaActividad"
                                     src="{{ tile.actividad.fotoPortada || 'assets/img/template-portada.jpg' }}">
-                                <div routerLink="/public/public-actividad/{{tile.actividad.uid}}"  class="centerActividad">
+                                <div routerLink="/public/public-actividad/{{tile.email}}/{{tile.actividad.uid}}"
+                                    class="centerActividad">
                                     {{tile.actividad.titulo}}</div>
-                                <div class="topleftAboutTime border" routerLink="/public/public-actividad/{{tile.actividad.uid}}">
+                                <div class="topleftAboutTime border"
+                                    routerLink="/public/public-actividad/{{tile.email}}/{{tile.actividad.uid}}">
                                     <div>{{tile.aboutTime}}</div>
                                 </div>
                                 <div class="toprightActividad">
-                                    <div class="grid-container" routerLink="/public/public-actividad/{{tile.actividad.uid}}">
+                                    <div class="grid-container"
+                                        routerLink="/public/public-actividad/{{tile.email}}/{{tile.actividad.uid}}">
                                         <div class="diaNombre">{{tile.actividad.fechaInicio | date:'EEEE'}}</div>
                                         <div class="diaNumero">
                                             <strong><b>{{tile.actividad.fechaInicio | date:'dd'}}</b></strong></div>
@@ -99,69 +118,87 @@
                                     </div>
                                 </div>
                                 <div class="topCenterTypeCard row noMargin green">
-                                    <div routerLink="/public/public-actividad/{{tile.actividad.uid}}" class="flexAuto  marto5">ACTIVIDAD</div>
+                                    <div routerLink="/public/public-actividad/{{tile.email}}/{{tile.actividad.uid}}"
+                                        class="flexAuto  marto5">ACTIVIDAD</div>
                                 </div>
                                 <div class="bottomCardInfo white noMargin pabo5">
-                        
+
                                     <mat-grid-list cols="2" rowHeight="35px">
                                         <mat-grid-tile>
-                                                <div class="text-inside-grid">
-                                                    <mat-icon class="icon-display align-middle">location_on</mat-icon>
-                                                    {{tile.actividad.estadoCiudad}} - {{tile.actividad.pais}}
-                                                </div>
+                                            <div class="text-inside-grid">
+                                                <mat-icon class="icon-display align-middle">location_on</mat-icon>
+                                                {{tile.actividad.estadoCiudad}} - {{tile.actividad.pais}}
+                                            </div>
                                         </mat-grid-tile>
                                         <mat-grid-tile>
-                                                <div class="text-inside-grid-autor pointer">
-                                                        <mat-icon class="icon-display align-middle ">account_circle</mat-icon>{{tile.autor}}
-                                                </div>
+                                            <div class="text-inside-grid-autor pointer"
+                                                routerLink="/public/public-perfil/{{tile.email}}">
+                                                <mat-icon class="icon-display align-middle ">account_circle</mat-icon>
+                                                {{tile.autor}}
+                                            </div>
                                         </mat-grid-tile>
                                         <mat-grid-tile>
-                                                <div class="text-inside-grid">
-                                                        <mat-icon class="icon-display align-middle" *ngIf="tile.actividad.profesionesRelacionadas">label</mat-icon>
-                                                        {{tile.actividad.profesionesRelacionadas.toString().split(',').join('\n'+'-'+'\n')}}
-                                                    </div>
+                                            <div class="text-inside-grid">
+                                                <mat-icon class="icon-display align-middle"
+                                                    *ngIf="tile.actividad.profesionesRelacionadas">label</mat-icon>
+                                                {{tile.actividad.profesionesRelacionadas.toString().split(',').join('\n'+'-'+'\n')}}
+                                            </div>
                                         </mat-grid-tile>
-                                        
+
                                         <mat-grid-tile>
-                                               
-                                                <div class="text-inside-grid ">
-                                                        
-                                                        <mat-icon matTooltip="me gusta" class="icon-displayMeGusta align-middle pointer"> favorite</mat-icon>
-                                                        <mat-icon matTooltip="compartir" class="icon-displayCompartir align-middle pointer"> share</mat-icon>
-                                                        <button routerLink="/public/public-actividad/{{tile.actividad.uid}}" matTooltip="asistir" mat-button color="primary">anotarme</button>
-                                                        
-                                                </div>
+
+                                            <div class="text-inside-grid ">
+
+                                                <mat-icon matTooltip="me gusta"
+                                                    class="icon-displayMeGusta align-middle pointer"> favorite
+                                                </mat-icon>
+                                                <mat-icon matTooltip="compartir"
+                                                    class="icon-displayCompartir align-middle pointer"> share</mat-icon>
+                                                <button
+                                                    routerLink="/public/public-actividad/{{tile.email}}/{{tile.actividad.uid}}"
+                                                    matTooltip="asistir" mat-button color="primary">anotarme</button>
+
+                                            </div>
                                         </mat-grid-tile>
                                     </mat-grid-list>
-                               
+
                                 </div>
                             </mat-card>
                         </div>
 
                         <div *ngIf="tile.album">
-                            <mat-card>
+                            <mat-card class="per">
                                 <img mat-card-image class="opacaAlbum"
                                     src="{{tile.album.fotoPortada||'assets/img/template-portada.jpg'}}">
-                                <div routerLink="/album/{{tile.album.uid}}" class="centerAlbum">{{tile.album.titulo}}
+                                <div routerLink="/public/public-album/{{tile.email}}/{{tile.album.uid}}"
+                                    class="centerAlbum">{{tile.album.titulo}}
                                 </div>
-                                <div class="bottomrightAlbum" routerLink="/album/{{tile.album.uid}}">
+                                <div class="bottomrightAlbum"
+                                    routerLink="/public/public-album/{{tile.email}}/{{tile.album.uid}}">
                                     <mat-icon>eye</mat-icon>
                                 </div>
-                                
-                                <div class="topleftAboutTime border" routerLink="/album/{{tile.album.uid}}">
+
+                                <div class="topleftAboutTime border"
+                                    routerLink="/public/public-album/{{tile.email}}/{{tile.album.uid}}">
                                     <div>{{tile.aboutTime}}</div>
                                 </div>
 
                                 <div class="bottomrightAlbum">
-                                    <div><p routerLink="/album/{{tile.album.uid}}" class="bottomrightAlbumA">{{tile.autor}}</p></div>
+                                    <div>
+                                        <p routerLink="/public/public-perfil/{{tile.email}}" class="bottomrightAlbumA">
+                                            {{tile.autor}}
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <div class="topCenterTypeCard row noMargin red">
-                                    <div routerLink="/album/{{tile.album.uid}}" class="flexAuto marto5">ALBUM</div>
+                                    <div routerLink="/public/public-album/{{tile.email}}/{{tile.album.uid}}"
+                                        class="flexAuto marto5">ALBUM</div>
                                 </div>
                                 <div class="bottomleftAlbum">{{tile.album.fechaCreacion | date:'d/M/yyyy'}}
                                 </div>
-                                <mat-card-content routerLink="/album/{{tile.album.uid}}" class="subtitulo">
+                                <mat-card-content routerLink="/public/public-album/{{tile.email}}/{{tile.album.uid}}"
+                                    class="subtitulo">
                                     <p>
                                         {{tile.album.subtitulo}}
                                     </p>

@@ -1,5 +1,7 @@
 <div class="h-100 homeContainer">
-
+    
+       
+        
         <div class="container">
         <div class="row">
             <div class="col-md-2">
@@ -7,12 +9,9 @@
             </div>
             <div class="col-md-8">
             
-                
-
                     <div class="center pato150" >
                             <h1>MI ARTE</h1>
                     </div>
-                    
                     <div class="row marbo20">
                         <div class="col"></div>
                         <div class="col-md-auto autor">
@@ -21,12 +20,12 @@
                         <div class="col col-lg-1"></div>
                     </div>
             
-                    <div class="row justify-content-center ">
+                    <div class="row justify-content-center">
                         <div class="col-md-12 padbo150">
                             <div class="row">
                                 <a class="col-sm-4 margenImagen" *ngFor="let alb of albums">
             
-                                    <mat-card class="example-card">
+                                    <mat-card class="color-card">
                                         <img mat-card-image class="opaca" src="{{alb.fotoPortada||'assets/img/template-portada.jpg'}}">
                                         <div routerLink="/album/{{alb.uid}}" class="centerA">{{alb.titulo}}</div>
                                         

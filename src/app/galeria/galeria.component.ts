@@ -19,6 +19,7 @@ export class GaleriaComponent implements OnInit {
   userLogged: User;
   album: Album;
   albums: Album[] = [];
+  
 
   constructor(private usuarioService: UsuarioService,
               private authenticationService: AuthenticationService,
@@ -38,6 +39,7 @@ export class GaleriaComponent implements OnInit {
           }
         });
       }
+      
     });
   }
 

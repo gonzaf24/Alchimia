@@ -7,7 +7,7 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Album } from 'src/app/interfaces/album';
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent } from '@angular/cdk/stepper';
 import { AlbumService } from 'src/app/services/album.service';
 
 export interface PromptModel {
@@ -61,6 +61,8 @@ export class EditarAlbumComponent extends DialogComponent<PromptModel, any> impl
 
   albums: Album[];
 
+  loading: boolean;
+
   constructor(public dialogService: DialogService,
     private userService: UsuarioService,
     private albumService: AlbumService,
@@ -101,23 +103,31 @@ export class EditarAlbumComponent extends DialogComponent<PromptModel, any> impl
     }
   }
 
+  selectionChange($event?: StepperSelectionEvent){
+    this.mensajeError="";
+    this.mensajeExito="";
+  }
+
   eliminarFoto(event) {
     if (this.albumToEdit.galeriaFotos.length > 1) {
       this.scope.albums = this.scope.albums.filter(obj => obj.uid !== this.scope.album.uid);
       this.albumToEdit.galeriaFotos = this.albumToEdit.galeriaFotos.filter(obj => obj !== event.nombre);
       var desertRef = this.firebaseStorage.storage.refFromURL(event.nombre);
       desertRef.delete().then(function () {
-        this.mensajeExito = "elemento eliminado ok"
+        
       }).catch(function (error) {
       });
-      this.mensajeError = ""
+      
       this.fotosUpload = this.fotosUpload.filter(obj => obj !== event);
       this.scope.albums.push(this.albumToEdit);
       this.albumService.editAlbum(this.userLogged.email, this.scope.albums).then(() => {
+        this.mensajeExito = "elemento eliminado ok"
+        this.mensajeError = ""
       }).catch((error) => {
         alert('Hubo un error al persistir con cambio de imagen' + error);
       });
     } else {
+      this.mensajeExito = "";
       this.mensajeError = "al menos debe haber un archivo en el album."
     }
   }
@@ -126,7 +136,7 @@ export class EditarAlbumComponent extends DialogComponent<PromptModel, any> impl
 
     if ((this.fotosUpload.length + event.target.files.length) > 0 && (this.fotosUpload.length + event.target.files.length) < 5) {
       for (let i = 0; i < event.target.files.length; i++) {
-        
+        this.loading = true;
         this.tablaUpload = { file: '', nombre: '', nombreCol: '', };
         const fileA = event.target.files[i];
 
@@ -152,6 +162,9 @@ export class EditarAlbumComponent extends DialogComponent<PromptModel, any> impl
 
               this.scope.albums.push(this.albumToEdit);
               this.albumService.editAlbum(this.userLogged.email, this.scope.albums).then(() => {
+                this.loading = false;
+                this.mensajeError="";
+                this.mensajeExito="archivo subido con exito."
               }).catch((error) => {
                 alert('Hubo un error al persistir con cambio de imagen' + error);
               });
@@ -166,12 +179,13 @@ export class EditarAlbumComponent extends DialogComponent<PromptModel, any> impl
       
 
     } else {
+      this.mensajeExito="";
       this.mensajeError = "Debe seleccionar al menos 1 archivo y como maximo 4."
     }
   }
 
   confirmDatosPortada() {
-
+    this.loading = true;
     this.scope.albums = this.scope.albums.filter(obj => obj.uid !== this.scope.album.uid);
     let alb: Album = this.albumToEdit;
     alb.titulo = this.firstFormGroup.get('titulo').value;
@@ -197,7 +211,9 @@ export class EditarAlbumComponent extends DialogComponent<PromptModel, any> impl
           //persistir album
           this.scope.albums.push(alb)
           this.albumService.editAlbum(this.userLogged.email, this.scope.albums).then(() => {
-
+            this.loading = false;
+            this.mensajeError="";
+            this.mensajeExito="actualizado los datos de portada."
           }).catch((error) => {
             alert('Hubo un error al persistir con cambio de imagen' + error);
           });
@@ -208,6 +224,9 @@ export class EditarAlbumComponent extends DialogComponent<PromptModel, any> impl
       //persistir album solo sin cambio de imagen
       this.scope.albums.push(alb)
       this.albumService.editAlbum(this.userLogged.email, this.scope.albums).then(() => {
+        this.loading = false;
+        this.mensajeError="";
+        this.mensajeExito="actualizado los datos de portada."
       }).catch((error) => {
         alert('Hubo un error al persistir sin cambio de imagen' + error);
       });
@@ -215,18 +234,16 @@ export class EditarAlbumComponent extends DialogComponent<PromptModel, any> impl
   }
 
   confirmDatosContenido() {
-
-    
+    this.loading= true;
     let alb: Album = this.albumToEdit;
-   // this.albums.filter(x => x.uid === this.albumToEdit.uid);
-
     alb.contenido = this.thirdFormGroup.get('contenido').value;
     alb.autor = this.thirdFormGroup.get('autor').value;
     this.scope.albums = this.scope.albums.filter(obj => obj.uid !== this.scope.album.uid);
-
     this.scope.albums.push(alb);
     this.albumService.editAlbum(this.userLogged.email, this.scope.albums).then(() => {
+      this.loading= false;
       this.mensajeExito = "cambios realizados ok"
+      this.mensajeError = ""
     }).catch((error) => {
       alert('Hubo un error al persistir contenido' + error);
     });

@@ -89,6 +89,9 @@ export class EditarUsuarioComponent  extends DialogComponent<PromptModel, any> i
 
   userToEdit: User;
 
+  loading: boolean;
+  dialogHolderComponent: EditarUsuarioComponent;
+
   sexs: Sex[] = [
     {value: 'Sr', viewValue: 'Sr'},
     {value: 'Srta', viewValue: 'Srta'},
@@ -181,6 +184,7 @@ cuartoStep(){
 }
 
 guardarCambios(){
+    this.loading = true;
     if (this.croppedImage) {
       const currentPictureId = Date.now();
       const pictures = this.firebaseStorage.ref('pictures/' +"avatar-"+currentPictureId+ '.jpg').putString(this.croppedImage, 'data_url');
@@ -191,6 +195,8 @@ guardarCambios(){
             this.userToEdit.avatar = avatarURL;
             this.userToEdit.notificar = false;
             this.userService.editarUsuario(this.userToEdit).then(() => {
+              this.loading = false;
+              this.dialogService.removeDialog(this);
             }).catch((error) => {
               alert('Hubo un error' + error);
               console.log(error);
@@ -200,6 +206,8 @@ guardarCambios(){
         });
     }else{
       this.userService.editarUsuario(this.userToEdit).then(() => {
+        this.loading = false;
+        this.dialogService.removeDialog(this);
       }).catch((error) => {
         alert('Hubo un error' + error);
         console.log(error);

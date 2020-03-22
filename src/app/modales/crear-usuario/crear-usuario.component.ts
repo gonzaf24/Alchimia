@@ -86,6 +86,8 @@ export class CrearUsuarioComponent extends DialogComponent<PromptModel, any> imp
 
   userToEdit: User;
 
+  loading: boolean;
+
   sexs: Sex[] = [
     {value: 'Sr', viewValue: 'Sr'},
     {value: 'Srta', viewValue: 'Srta'},
@@ -169,6 +171,7 @@ cuartoStep(){
 }
 
 guardarCambios(){
+    this.loading=true;
     if (this.croppedImage) {
 
       var d = new Date(Date.now()); 
@@ -185,6 +188,8 @@ guardarCambios(){
             this.userToEdit.avatar = avatarURL;
             this.userToEdit.notificar = false;
             this.userService.editarUsuario(this.userToEdit).then(() => {
+              this.loading=false;
+              this.dialogService.removeDialog(this);
             }).catch((error) => {
               alert('Hubo un error' + error);
               console.log(error);

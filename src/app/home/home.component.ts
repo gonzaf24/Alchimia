@@ -32,20 +32,21 @@ export class HomeComponent {
 
   userLogged: User;
   unaSolaVez: boolean = false;
-
   muro: Muro[] = [];
 
-  constructor(private usuarioService: UsuarioService,
-    private actividadService: ActividadService,
-    private albumService: AlbumService,
-    private authenticationService: AuthenticationService,
-    private dialogService: DialogService) {
+  loading: boolean;
 
+  constructor(private usuarioService: UsuarioService,
+              private actividadService: ActividadService,
+              private albumService: AlbumService,
+              private authenticationService: AuthenticationService,
+              private dialogService: DialogService) {
+                
+    this.loading=true;
     this.authenticationService.getStatus().subscribe((status) => {
       if (status) {
         this.usuarioService.getUserById(status.uid).valueChanges().subscribe((data: User) => {
           this.userLogged = data;
-
         }, (error) => {
           console.log(error);
         });
@@ -53,6 +54,18 @@ export class HomeComponent {
     }, (error) => {
       console.log(error);
     });
+    this.obtenerMuro();
+    this.loading=false;
+  }
+
+  funcionDeFechas(date1, date2) {
+    let dt1 = new Date(date1);
+    let dt2 = new Date(date2);
+    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
+  }
+
+  ngOnInit() {
+    
     if (this.authenticationService.currentUserValue()) {
       this.usuarioService.getUserById(this.authenticationService.currentUserValue().uid).valueChanges().subscribe((data: User) => {
         this.userLogged = data;
@@ -63,17 +76,22 @@ export class HomeComponent {
       });
     }
 
-    this.obtenerMuro();
-
   }
 
-  async obtenerMuro(){
+  primeraVez() {
+    if (this.userLogged && this.userLogged.notificar && !this.unaSolaVez) {
+      this.unaSolaVez = true;
+      this.dialogService.addDialog(CrearUsuarioComponent, { scope: this, currentRequest: this.userLogged });
+    }
+  }
+
+    obtenerMuro(){
 
     let startDate = new Date();
     let fechaHoy = new Date();
     let fechaHoyMenosTresMeses: any;
     let fechaHoyFormato: any;
-    startDate.setMonth(startDate.getMonth() - 4);
+    startDate.setMonth(startDate.getMonth() - 3);
     fechaHoyMenosTresMeses = startDate.toISOString().slice(0, 10);
     fechaHoyFormato = fechaHoy.toISOString().slice(0, 10);
     let usuariosParaIterar: User[];
@@ -83,65 +101,67 @@ export class HomeComponent {
     // mostrar en el muro (wall)   --->    :(
 
     this.usuarioService.getUserToWall().valueChanges().subscribe((data: User[]) => {
-      usuariosParaIterar = data;
-      for (let i = 0; i < usuariosParaIterar.length; i++) {
-        let usuarioA = usuariosParaIterar[i];
-        let fc = new Date(usuarioA.fechaCreacion);
-        let fechaCreacionUser: any;
-        fechaCreacionUser = fc.toISOString().slice(0, 10)
-        if (fechaCreacionUser > fechaHoyMenosTresMeses) {
-          let aboutTimes: string = "";
-          if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 0 || this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) < 0) {
-            aboutTimes = "hoy ... ";
-          } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 1) {
-            aboutTimes = "hace 1 dia ... ";
-          } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 2) {
-            aboutTimes = "hace 2 dias ... ";
-          } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 3) {
-            aboutTimes = "hace 3 dias ... ";
-          } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 4) {
-            aboutTimes = "hace 3 dias ... ";
-          } else if ((this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) >= 5 )&& (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) <= 10)) {
-            aboutTimes = "+ de 5 dias ... ";
-          } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) >= 11 && this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) <= 20) {
-            aboutTimes = "+ de 10 dias ... ";
-          } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) >= 30) {
-            aboutTimes = "+ de 1 mes ... ";
+        usuariosParaIterar = data;
+        //alert('largo a iterar : ' + usuariosParaIterar.length);
+        for (let i = 0; i < usuariosParaIterar.length; i++) {
+          let usuarioA = usuariosParaIterar[i];
+          if(usuarioA.fechaCreacion){
+            let fc = new Date(usuarioA.fechaCreacion);
+          let fechaCreacionUser: any;
+          fechaCreacionUser = fc.toISOString().slice(0, 10)
+          if (fechaCreacionUser > fechaHoyMenosTresMeses) {
+            let aboutTimes: string = "";
+            if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 0 || this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) < 0) {
+              aboutTimes = "hoy ... ";
+            } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 1) {
+              aboutTimes = "hace 1 dia ... ";
+            } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 2) {
+              aboutTimes = "hace 2 dias ... ";
+            } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 3) {
+              aboutTimes = "hace 3 dias ... ";
+            } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) === 4) {
+              aboutTimes = "hace 3 dias ... ";
+            } else if ((this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) >= 5 )&& (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) <= 10)) {
+              aboutTimes = "+ de 5 dias ... ";
+            } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) >= 11 && this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) <= 20) {
+              aboutTimes = "+ de 10 dias ... ";
+            } else if (this.funcionDeFechas(fechaCreacionUser, fechaHoyFormato) >= 30) {
+              aboutTimes = "+ de 1 mes ... ";
+            }
+            let muroAdd: Muro = {
+              tipo: "user",
+              fecha: fechaCreacionUser,
+              actividad: null,
+              usuario: usuarioA,
+              album: null,
+              aboutTime: aboutTimes,
+              autor: usuarioA.nombre + " " + usuarioA.apellido,
+              email: usuarioA.email
+            };
+  
+            this.muro.push(muroAdd);
+            this.ordenar();
+  
           }
-          let muroAdd: Muro = {
-            tipo: "user",
-            fecha: fechaCreacionUser,
-            actividad: null,
-            usuario: usuarioA,
-            album: null,
-            aboutTime: aboutTimes,
-            autor: usuarioA.nombre + " " + usuarioA.apellido,
-            email: usuarioA.email
-          };
-
-          this.muro.push(muroAdd);
-          this.ordenar();
-
+          }
+          
         }
-      }
+        
     }, (error) => {
       alert("errror" + error);
     });
+  
 
     this.albumService.getAlbumsToWall().valueChanges().subscribe((data: any[]) => {
       // obtengo la lista del ...@...,com
       let albumWall: any[] = data;
-      
       for (let h = 0; h < albumWall.length; h++) {
-
         let albms: Albums = albumWall[h];
         //recorro los albums de ese usuario
         for(let i = 0 ; i <albms.albums.length ; i++ ){
           
           let alb : Album =  albms.albums[i];
-
           let idUser = alb.uid.substring(alb.uid.indexOf("|") + 1);
-
           let fcA = new Date(alb.fechaCreacion);
           let fechaCreacionAlbum: any;
           fechaCreacionAlbum = fcA.toISOString().slice(0, 10)
@@ -179,8 +199,8 @@ export class HomeComponent {
                     usuario: null,
                     album: alb,
                     aboutTime: aboutTimesA,
-                    autor: user.nombre + " " + user.apellido,
-                    email: user.email
+                    autor:  user.nombre  + " " +user.apellido,
+                    email: user.email 
                   };
   
                   this.muro.push(muroAddA);
@@ -200,15 +220,14 @@ export class HomeComponent {
 
       // obtengo la lista del ...@...,com
       let actividadesWall: any[] = data;
+      //alert('largo a iterar actividades : ' + actividadesWall.length);
       for (let i = 0; i < actividadesWall.length; i++) {
         let activi: Actividades = actividadesWall[i];
          //recorro las actividades de ese usuario
         for (let h = 0; h < activi.actividades.length; h++) {
-          let acti: Actividad = activi.actividades[h];
-
-          let idUser = acti.uid.substring(acti.uid.indexOf("|") + 1);
-          
-            let user = data;
+            
+            let acti: Actividad = activi.actividades[h];
+            let idUser = acti.uid.substring(acti.uid.indexOf("|") + 1);
             let fcA = new Date(acti.fechaCreacion);
             let fechaCreacionActiv: any;
             fechaCreacionActiv = fcA.toISOString().slice(0, 10)
@@ -244,8 +263,8 @@ export class HomeComponent {
                 usuario: null,
                 album: null,
                 aboutTime: aboutTimesA,
-                autor: user.nombre + " " + user.apellido,
-                email: user.email
+                autor:  user.nombre  + " " +user.apellido,
+                email: user.email 
               };
 
               this.muro.push(muroAddA);
@@ -256,7 +275,6 @@ export class HomeComponent {
             });
 
           }
-
         }
       }
 
@@ -264,37 +282,12 @@ export class HomeComponent {
       alert("errror" + error);
     });
 
+   
+
   }
 
   ordenar(){
     this.muro.sort((a: Muro, b: Muro) => +new Date(b.fecha) - +new Date(a.fecha));
   }
-
-  funcionDeFechas(date1, date2) {
-    let dt1 = new Date(date1);
-    let dt2 = new Date(date2);
-    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
-  }
-
-  ngOnInit() {
-
-    if (this.authenticationService.currentUserValue()) {
-      this.usuarioService.getUserById(this.authenticationService.currentUserValue().uid).valueChanges().subscribe((data: User) => {
-        this.userLogged = data;
-        if (this.userLogged && this.userLogged.notificar && !this.unaSolaVez) {
-          this.unaSolaVez = true;
-          this.dialogService.addDialog(CrearUsuarioComponent, { scope: this, currentRequest: this.userLogged });
-        }
-      });
-    }
-  }
-
-  primeraVez() {
-    if (this.userLogged && this.userLogged.notificar && !this.unaSolaVez) {
-      this.unaSolaVez = true;
-      this.dialogService.addDialog(CrearUsuarioComponent, { scope: this, currentRequest: this.userLogged });
-    }
-  }
-
-
+  
 }

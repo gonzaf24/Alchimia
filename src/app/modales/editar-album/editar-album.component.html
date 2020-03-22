@@ -5,14 +5,15 @@
                         <button mat-button color="pinkA" (click)="close()">cerrar</button>
                     </div>  
                     <h3 class="center">EDITAR ALBUM</h3>
-                  <mat-horizontal-stepper  #stepper class="bordeado" labelPosition="bottom" >
+                  <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="bordeado" labelPosition="bottom" >
                           
                           <mat-step [stepControl]="firstFormGroup" state="edit">
                             
                             <form class="example-form" [formGroup]="firstFormGroup">
                                   <ng-template matStepLabel>PORTADA</ng-template>
                                   <hr>
-                                  <div class="center greenA">{{ mensajeExito }}</div> 
+                                  <div class="center redA ">{{mensajeError}}</div> 
+                                  <div class="center greenA">{{mensajeExito}}</div>  
                                   <mat-form-field class="example-full-width"> 
                                     <mat-label>Titulo</mat-label>
                                     <input matInput required placeholder="titulo principal del album" formControlName="titulo" >
@@ -59,8 +60,10 @@
                                       <mat-icon class="camaraAlign">camera_enhance</mat-icon>
                                   </label>
                               </div>
-                                    <div class="center redA">{{ mensajeError }}</div> 
-                              <table class="table size-08">
+                              <div class="center redA ">{{mensajeError}}</div> 
+                              <div class="center greenA">{{mensajeExito}}</div> 
+                              <div class="row justify-content-center"><mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner></div>
+                              <table class="table size-08 white">
                                   <thead>
                                       <tr>
                                           <th width="50%">Nombre</th>
@@ -87,7 +90,9 @@
                               <form class="example-form" [formGroup]="thirdFormGroup">
                                 <ng-template matStepLabel>CONTENIDO</ng-template>
                                 <hr>
-                                <div class="center greenA">{{ mensajeExito }}</div> 
+                                <div class="center redA ">{{mensajeError}}</div> 
+                                <div class="center greenA">{{mensajeExito}}</div> 
+                                <div class="row justify-content-center"><mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner></div>
                                 <mat-form-field class="example-full-width">
                                     <mat-label>Contenido/Descripcion Album</mat-label>
                                     <textarea   matInput 

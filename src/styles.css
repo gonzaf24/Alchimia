@@ -4,6 +4,19 @@
     transform: none !important;
 }
 
+.mat-menu-panel{
+  background-color: #010f1f !important;
+  color:white !important;
+}
+
+.borderColorCard{
+  border: 1px solid #010f1f!important;
+}
+
+hr{
+  border: 0.5px solid #010f1f!important;
+}
+
 strong{
   font-weight: bold;
 }
@@ -66,7 +79,6 @@ strong{
 .padbo350 {
   padding-bottom: 350px !important;
 }
-
 .generalContent {
   margin-top: 5px;
 }
@@ -79,7 +91,6 @@ strong{
 .pato150 {
   padding-top: 150px !important;
 }
-
 .pato180 {
   padding-top: 180px !important;
 }
@@ -98,7 +109,6 @@ strong{
 .pato50 {
   padding-top: 50px !important;
 }
-
 .marbo5 {
   margin-bottom: 5px;
 }
@@ -107,6 +117,9 @@ strong{
 }
 .pato45 {
   padding-top: 45px;
+}
+.pato10{
+  padding-top: 10px;
 }
 .pabo45 {
   padding-bottom: 45px;

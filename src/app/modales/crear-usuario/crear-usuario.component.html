@@ -85,7 +85,7 @@
                               
                               <mat-form-field class="example-full-width">
                                   <mat-label>Telefono</mat-label>
-                                    <input type="number" matInput placeholder="Ej: +34653058319" formControlName="telefono" required>
+                                    <input matInput placeholder="Ej: +34653058319" formControlName="telefono" required>
                                 </mat-form-field>
                   
                                 <div class="row marto20 alineado">
@@ -179,6 +179,9 @@
                                 <hr>  
                                 <p class="colorTextoBlanco">No necesitamos ser anónimos aquí, cuanto más transparente seamos mejor sera nuestra alquimia. Anda! pon una fotografía bonita de ti.</p>
                                 <hr>
+
+                                <div class="row justify-content-center"><mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner></div>
+
                                 <div  class="text-center">
                                     <label class="circle text-center">
                                         <input formControlName="avatar" type="file" (change)="fileChangeEvent($event)">
@@ -186,7 +189,7 @@
                                     </label>
                                 </div>
                   
-                                <div class="text-center bordeado" >
+                                <div *ngIf="!loading" class="text-center bordeado" >
                                     <image-cropper class="bordeado"
                                         [imageChangedEvent]="imageChangedEvent"
                                         [maintainAspectRatio]="true"
@@ -199,7 +202,7 @@
                                     ></image-cropper>
                                 </div>
     
-                                <div class="center marto20" >
+                                <div *ngIf="!loading" class="center marto20" >
                                     <img  [src]="croppedImage||'assets/img/avatar.png'" class="avatarImage img-fluid">
                                 </div>
     
@@ -209,16 +212,13 @@
                                     </div>
                                     <span class="fx-spacer"></span>
                                     <div>
-                                      <button *ngIf="croppedImage" mat-raised-button class="pink" (click)="guardarCambios();close();" matStepperNext>Confirmar !</button>
+                                      <button *ngIf="croppedImage" mat-raised-button class="pink" (click)="guardarCambios();" matStepperNext>Confirmar !</button>
                                     </div>
                                 </div>
                                 
                               </form>
                           </mat-step>
                     </mat-horizontal-stepper>
-                   <!--  <div class="modal-footerA">
-                        <button mat-button color="pinkA" (click)="close()">cerrar</button>
-                    </div>  -->
              </div>
         </div>
     </div>

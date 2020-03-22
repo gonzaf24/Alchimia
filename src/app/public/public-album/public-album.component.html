@@ -1,1 +1,48 @@
-<p>public-album works!</p>
+<div class="h-100 homeContainer pato150 pabo45">
+        
+        <div class="container">
+        <div class="row">
+                <div class="col-md-2">
+                
+                </div>
+                <div class="col-md-8">
+                                <div class="border borderColorCard" *ngIf="album">
+        
+                                                <div class="col-sm-12 center marto20">
+                                                        <h3>{{album.titulo}}</h3>
+                                                </div>
+                                                <hr>
+                                
+                                                <div class="col-sm-12 center marto20 cc">
+                                                        <ngx-gallery  [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                                                </div>
+                                                <hr>
+                                                <div class="row justify-content-md-center marto20">
+                                                        <div class="col col-lg-2"></div>
+                                                        <div class="col-md-8 formatoConSaltoLineas">
+                                                        {{album.contenido}}
+                                                        </div>
+                                                        <div class="col col-lg-2"></div>
+                                                </div>
+                                                <hr>
+                                
+                                                <div class="row marto20" *ngIf="usuario" >
+                                                        <div class="col">
+                                                        </div>
+                                                        <div class="col-md-auto autor pointer" routerLink="/public/public-perfil/{{email}}" >
+                                                             <p>{{usuario.nombre}} {{usuario.apellido}}</p>
+                                                        </div>
+                                                        <div class="col col-lg-2">
+                                                        </div>
+                                                </div>
+                                                
+                                        </div>
+                </div>
+                <div class="col-md-2">
+                
+                </div>
+        </div>
+        </div>
+        
+
+</div>

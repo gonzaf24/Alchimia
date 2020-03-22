@@ -15,6 +15,11 @@ mat-card-content.subtitulo{
     cursor: pointer;
 }
 
+.color-card{
+    background-color: #010f1f !important;
+  color:white !important;
+}
+
 .centerA:hover {
     cursor: pointer;
     position: absolute;

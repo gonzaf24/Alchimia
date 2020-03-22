@@ -5,7 +5,7 @@
             <div class="col-md-2">
             </div>
             <div class="col-md-8">
-                    <div class="container border rounded" *ngIf="actividad">
+                    <div class="container borderColorCard rounded" *ngIf="actividad">
                             <div class="container">
                                 <div class="row justify-content-center marto25">
                                     <div class="col-xs-12">
@@ -14,18 +14,18 @@
                                 </div>
                                 <hr>
                                 <div class="row marto25">
-                                    <div class="col-xs-12 col-md-6">
+                                    <div class="col-xs-12 col-md-6 center">
                                         <img mat-card-image class="dimensionesImagen"
                                             src="{{actividad.fotoPortada || 'assets/img/template-portada.jpg'}}">
                                     </div>
-                                    <div class="col-xs-12 col-md-6">
+                                    <div class="col-xs-12 col-md-6 center">
                                         <div class="row">
                                             <div class="col-xs-12 w-100">
                                                 <div class="row ">
                                                     <div class="col-xs-1 col-md-1">
                                                         <mat-icon class="icon-display">today</mat-icon>
                                                     </div>
-                                                    <div class="col-xs-4 col-md-4">
+                                                    <div class="col-xs-4 col-md-4 left">
                                                         <strong class="size-08">Fecha</strong>
                                                     </div>
                                                     <div class="col-xs-7 col-md-7 size-08">
@@ -59,7 +59,7 @@
                                                         <mat-icon class="icon-display">label</mat-icon>
                                                     </div>
                                                     <div class="col-xs-4 col-md-4">
-                                                        <strong class="size-08">Tags</strong>
+                                                        <strong class="size-08" >Tags</strong>
                                                     </div>
                                                     <div class="col-xs-7 col-md-7 size-08" *ngIf="actividad.profesionesRelacionadas">
                                                             {{actividad.profesionesRelacionadas.toString().split(',').join('\n'+'-'+'\n')}}
@@ -77,7 +77,7 @@
                                                     <div class="col-xs-4 col-md-4">
                                                             <strong class="size-08">Responsable</strong>
                                                     </div>
-                                                    <div class="col-xs-7 col-md-7 size-08">
+                                                    <div class="col-xs-7 col-md-7 size-08 pointer" routerLink="/public/public-perfil/{{userLogged.email}}">
                                                         {{userLogged.nombre}} {{userLogged.apellido}}
                                                     </div>
                                                 </div>
@@ -123,7 +123,6 @@
                                             </div>
                                     </div>
                                 </div>
-                                <hr>
                                 <div class="row">
                                     <div class="col-xs-12 w-100 formatoConSaltoLineas">
                                             <div class="row"> 
@@ -139,13 +138,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
+                               
                                 <div class="row">
                                     <div class="col-xs-12 w-100">
                                         
                                     </div>
                                 </div>
-                                <hr>
+
+                              <hr>
                             </div>
                     
                         </div>

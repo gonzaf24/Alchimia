@@ -5,8 +5,8 @@
   bottom: 0px;
   left: 0px;
   font-size: 10px;
-  background-color: white;
-  color: #424242;
+  background-color: #010f1f !important;
+  color:white !important;
   width: 100%;
   height: auto;
   z-index: 0;
@@ -139,6 +139,11 @@ mat-card-content.prueb{
 .opacaActividad {
   opacity: 0.4 !important;
    min-height: 280px;
+}
+
+.color-card{
+  background-color: #010f1f !important;
+color:white !important;
 }
 
 .bottomrightA {

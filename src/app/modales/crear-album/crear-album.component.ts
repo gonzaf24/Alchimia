@@ -56,6 +56,8 @@ export class CrearAlbumComponent extends DialogComponent<PromptModel, any> imple
   tablaUpload: FotosAlbum;
 
   albums: Album[]= [];
+
+  loading: boolean;
   
   constructor(public dialogService: DialogService,
     private userService: UsuarioService,
@@ -118,8 +120,9 @@ export class CrearAlbumComponent extends DialogComponent<PromptModel, any> imple
   public cambioArchivo(event) {
 
     if ((this.fotosUpload.length + event.target.files.length) > 0 && (this.fotosUpload.length + event.target.files.length) < 5) {
-
+      
       for (let i = 0; i < event.target.files.length; i++) {
+        this.loading = true;
         //agrego la carga de archivos a la persistencia de galeriaFotos     
         this.tablaUpload = { file: '', nombre: '', nombreCol: '', };
         const fileA = event.target.files[i];
@@ -138,6 +141,7 @@ export class CrearAlbumComponent extends DialogComponent<PromptModel, any> imple
               var fileExt = fileA.name.split('.').pop();
               this.tablaUpload.nombreCol = "archivo - " + (i + 1) + "." + fileExt;
               this.fotosUpload.push(this.tablaUpload);
+              this.loading = false;
             });
           });
         };
@@ -158,6 +162,7 @@ export class CrearAlbumComponent extends DialogComponent<PromptModel, any> imple
   }
 
   guardarCambios() {
+    this.loading = true;
     this.albunToCreate.contenido = this.thirdFormGroup.get('contenido').value;
     this.albunToCreate.autor = this.thirdFormGroup.get('autor').value;
 
@@ -169,6 +174,7 @@ export class CrearAlbumComponent extends DialogComponent<PromptModel, any> imple
     this.firstFormGroup.get('fechaCreacion').setValue(fecha);
     this.albunToCreate.fechaCreacion = this.firstFormGroup.get('fechaCreacion').value;
     let albums: Albums={albums:[]};
+    
     if (this.fotoPortada) {
 
       const currentPictureId = Date.now();
@@ -181,7 +187,8 @@ export class CrearAlbumComponent extends DialogComponent<PromptModel, any> imple
           this.albums.push(this.albunToCreate);
           albums.albums=this.albums; 
           this.albumService.newAlbum(this.userLogged.email, albums).then(() => {
-
+            this.loading = false;
+            this.dialogService.removeDialog(this);
           }).catch((error) => {
             alert('Hubo un error' + error);
             console.log(error);
@@ -193,7 +200,8 @@ export class CrearAlbumComponent extends DialogComponent<PromptModel, any> imple
       this.albums.push(this.albunToCreate);
       albums.albums=this.albums; 
       this.albumService.newAlbum(this.userLogged.email, albums).then(() => {
-
+        this.loading = false;
+        this.dialogService.removeDialog(this);
       }).catch((error) => {
         alert('Hubo un error' + error);
         console.log(error);

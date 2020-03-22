@@ -167,8 +167,11 @@
                                         <mat-icon class="camaraAlign">camera_enhance</mat-icon>
                                     </label>
                                 </div>
+
+                                <div class="row justify-content-center"><mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner></div>
+
                   
-                                <div class="text-center bordeado" >
+                                <div  *ngIf="!loading" class="text-center bordeado" >
                                     <image-cropper class="bordeado"
                                         [imageChangedEvent]="imageChangedEvent"
                                         [maintainAspectRatio]="true"
@@ -181,7 +184,7 @@
                                     ></image-cropper>
                                 </div>
     
-                                <div class="center marto20" >
+                                <div *ngIf="!loading" class="center marto20" >
                                     <img  [src]="croppedImage|| scope.userLogged.avatar ||'assets/img/avatar.png'" class="avatarImage img-fluid">
                                 </div>
     
@@ -191,7 +194,7 @@
                                     </div>
                                     <span class="fx-spacer"></span>
                                     <div>
-                                      <button mat-raised-button class="pink" (click)="guardarCambios();close();" matStepperNext>Confirmar !</button>
+                                      <button mat-raised-button class="pink" (click)="guardarCambios();" matStepperNext>Confirmar !</button>
                                     </div>
                                 </div>
                                 

@@ -6,9 +6,12 @@
   }
   .bordeado{
     border-radius: 20px;
-    -moz-box-shadow:    inset 0 0 10px #000000;
+    background-color: #010f1f !important;
+    color:white !important;
+    border-color: white;
+/*     -moz-box-shadow:    inset 0 0 10px #000000;
     -webkit-box-shadow: inset 0 0 10px #000000;
-    box-shadow:         inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000; */
   }
   
   .prueba1{

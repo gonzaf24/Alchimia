@@ -40,8 +40,9 @@ export class UsuarioService {
 
           endDate.setMonth(endDate.getMonth()+8);
           formattedDateEnd=endDate.toISOString().slice(0,10);
-
-    return this.angularFireDatabase.list('usuarios', ref => ref.orderByChild('fechaCreacion').startAt(formattedDateStart).endAt(formattedDateEnd));
+      
+          return this.angularFireDatabase.list('/usuarios');
+   // return this.angularFireDatabase.list('usuarios', ref => ref.orderByChild('fechaCreacion').startAt(formattedDateStart).endAt(formattedDateEnd));
   }
 
 

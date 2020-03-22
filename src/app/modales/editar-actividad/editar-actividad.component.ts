@@ -15,7 +15,6 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { DatePipe } from '@angular/common';
 import { Actividad } from 'src/app/interfaces/actividad';
 import { ActividadService } from 'src/app/services/actividad.service';
-import { Actividades } from 'src/app/interfaces/actividades';
 
 export interface PromptModel {
   scope: any;
@@ -78,6 +77,8 @@ export class EditarActividadComponent extends DialogComponent<PromptModel, any> 
   fotoPortada: any = '';
   huboCambioDeImagen: boolean;
 
+  loading: boolean;
+
   todasLasProfesiones: string[] = ['Meditacion', 'Moda', 'Eventos', 'Educacion', 'Musica', 'Arte', 'Ingeniero'];
 
   horas: Tabla[] = [
@@ -116,10 +117,8 @@ export class EditarActividadComponent extends DialogComponent<PromptModel, any> 
     { value: '45', viewValue: '45 min' },
   ];
 
-
   @ViewChild('profesionesInput', { static: false }) profesionesInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocompleteProfesion: MatAutocomplete;
-
 
   constructor(public dialogService: DialogService,
     private userService: UsuarioService,
@@ -201,7 +200,7 @@ export class EditarActividadComponent extends DialogComponent<PromptModel, any> 
   }
 
   guardarCambios() {
-
+    this.loading=true;
     this.actividadToEdit.informacion = this.thirdFormGroup.get('informacion').value;
     this.actividadToEdit.profesionesRelacionadas = this.profesionesList;
 
@@ -223,7 +222,8 @@ export class EditarActividadComponent extends DialogComponent<PromptModel, any> 
           this.scope.actividades.push(this.actividadToEdit);
           this.actividadService.editActividad(this.userLogged.email, this.scope.actividades).then(() => {
             this.scope.actividades.sort((a: Actividad, b: Actividad) => +new Date(b.fechaCreacion) - +new Date(a.fechaCreacion));
-
+            this.loading=false;
+            this.dialogService.removeDialog(this);
           }).catch((error) => {
             alert('Hubo un error al persistir' + error);
             console.log(error);
@@ -234,9 +234,9 @@ export class EditarActividadComponent extends DialogComponent<PromptModel, any> 
       this.scope.actividades = this.scope.actividades.filter(obj => obj.uid !== this.scope.actividad.uid);
       this.scope.actividades.push(this.actividadToEdit);
       this.actividadService.editActividad(this.userLogged.email, this.scope.actividades).then(() => {
-      
-      this.scope.actividades.sort((a: Actividad, b: Actividad) => +new Date(b.fechaCreacion) - +new Date(a.fechaCreacion));
-
+        this.scope.actividades.sort((a: Actividad, b: Actividad) => +new Date(b.fechaCreacion) - +new Date(a.fechaCreacion));
+        this.loading=false;
+        this.dialogService.removeDialog(this);
       }).catch((error) => {
         alert('Hubo un error al persistir' + error);
         console.log(error);

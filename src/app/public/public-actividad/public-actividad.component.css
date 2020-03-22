@@ -26,3 +26,14 @@
 .icon-display {
     transform: scale(0.6);
   }
+
+.pointer{
+    cursor: pointer;
+    color: darkblue;
+   
+}
+.pointer:hover{
+    cursor: pointer;
+    
+    font-size: 1.0em;
+}

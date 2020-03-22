@@ -205,8 +205,9 @@
                     <form class="example-form" [formGroup]="thirdFormGroup">
                         <ng-template matStepLabel>INFORMACION/TAGS</ng-template>
                         <hr>
+                        <div class="row justify-content-center"><mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner></div>
 
-                        <mat-form-field class="example-chip-list example-full-width">
+                        <mat-form-field *ngIf="!loading" class="example-chip-list example-full-width">
                             <mat-chip-list #chipListProfesiones formControlName="profesionesRelacionadas">
                                 <mat-chip *ngFor="let prof of profesionesList" [selectable]="selectable"
                                     [removable]="removable" (removed)="removeProf(prof)">
@@ -226,7 +227,7 @@
                             </mat-autocomplete>
                         </mat-form-field>
 
-                        <mat-form-field class="example-full-width minH200">
+                        <mat-form-field *ngIf="!loading" class="example-full-width minH200">
                             <mat-label>Informacion de la actividad</mat-label>
                             <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="6" cdkAutosizeMaxRows="15"
                                 class="minH200" required maxlength="600" formControlName="informacion" required matInput
@@ -239,7 +240,7 @@
                             </div>
                             <span class="fx-spacer"></span>
                             <div>
-                                <button mat-raised-button class="pink" (click)="guardarCambios();close()"
+                                <button mat-raised-button class="pink" (click)="guardarCambios()"
                                     matStepperNext>Confirmar!</button>
                             </div>
                         </div>

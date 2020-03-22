@@ -78,6 +78,8 @@ export class CrearActividadComponent extends DialogComponent<PromptModel, any> i
 
   actividades: Actividad[] = [];
 
+  loading: boolean;
+
   todasLasProfesiones: string[] = [ 'Meditacion', 'Moda', 'Eventos', 'Educacion','Musica', 'Arte' ,'Ingeniero'];
 
   horas: Tabla[] = [
@@ -201,7 +203,8 @@ segundoStep(){
 }
 
 guardarCambios(){
-
+  
+  this.loading=true;
   this.actividadToCreate.informacion = this.thirdFormGroup.get('informacion').value;
   this.actividadToCreate.profesionesRelacionadas = this.profesionesList;
   
@@ -225,7 +228,8 @@ guardarCambios(){
             actividades.actividades=this.actividades;
             this.actividadService.newActividad(this.userLogged.email,actividades).then(() => {
               this.scope.actividades.sort((a: Actividad, b: Actividad) => +new Date(b.fechaCreacion) - +new Date(a.fechaCreacion));
-
+              this.loading=false;
+              this.dialogService.removeDialog(this);
             }).catch((error) => {
               alert('Hubo un error' + error);
             });
@@ -236,7 +240,8 @@ guardarCambios(){
       actividades.actividades=this.actividades;
       this.actividadService.newActividad(this.userLogged.email,actividades).then(() => {
         this.scope.actividades.sort((a: Actividad, b: Actividad) => +new Date(b.fechaCreacion) - +new Date(a.fechaCreacion));
-
+        this.loading=false;
+        this.dialogService.removeDialog(this);
       }).catch((error) => {
         alert('Hubo un error' + error);
       });
