@@ -5,8 +5,8 @@ Para ejecutarlo , primero clonarlo:
 
 En tu terminal una vez parado en la carpeta clonada, previamentente teniendo instalado angular cli (sudo npm install -g @angular/cli).
 
-npm install 
-ng serve
+<p>npm install</p> 
+<p>ng serve</p>
 
 
 Red de Profesionales dispuestos a crear
