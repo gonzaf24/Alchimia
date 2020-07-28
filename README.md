@@ -16,5 +16,7 @@ Red de Profesionales dispuestos a crear
 DEMO:
 https://alchimia-ec74e.web.app/public
 
+User prueba : gon@gon.com  password: gonzalo
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.18.
