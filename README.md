@@ -1,6 +1,5 @@
-
-# Alchimia
-# Red de Profesionales dispuestos a crear
+ 
+# Alchimia ---- > Red de Profesionales dispuestos a crear
 
 Para ejecutarlo , primero clonarlo:
 
